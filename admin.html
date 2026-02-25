@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Winter Tuscany Camp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () { emailjs.init("HvNxuhIR0mdVRUIhR"); })();
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+    <button id="mobile-toggle-btn" class="mobile-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="admin-container">
+        <aside class="sidebar" id="adminSidebar">
+            <div class="sidebar-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div class="logo" style="margin: 0;">TC ADMIN</div>
+                <span id="close-sidebar-btn" class="close-sidebar"
+                    style="cursor: pointer; font-size: 1.5rem; display: none;">&times;</span>
+            </div>
+
+            <nav>
+                <!-- GESTIONE PRINCIPALE -->
+                <button class="nav-btn" onclick="showTab('teachers-mgmt')">
+                    <i class="fas fa-chalkboard-teacher"></i> Gestione Insegnanti
+                </button>
+                <button class="nav-btn active" onclick="showTab('availability')">
+                    <i class="fas fa-clock"></i> Imposta Orari
+                </button>
+                <button class="nav-btn" onclick="showTab('schedule')">
+                    <i class="fas fa-print"></i> Stampa Piani
+                </button>
+                <button class="nav-btn" onclick="showTab('accounting')">
+                    <i class="fas fa-calculator"></i> Contabilità
+                </button>
+                <button class="nav-btn" onclick="showTab('balances')">
+                    <i class="fas fa-hand-holding-usd"></i> Gestione Pagamenti
+                </button>
+                <button class="nav-btn" onclick="showTab('registrations')">
+                    <i class="fas fa-users"></i> Iscritti Entry Form
+                </button>
+                <button class="nav-btn" onclick="showTab('messages')">
+                    <i class="fas fa-envelope"></i> Messaggi Ricevuti
+                </button>
+                <button class="nav-btn" onclick="showTab('users-system')">
+                    <i class="fas fa-id-card"></i> Gestione Account
+                </button>
+
+                <!-- TOOL & IMPOSTAZIONI SITO (SEPARATI) -->
+                <div style="margin-top: auto; border-top: 1px solid #333; padding-top: 15px; margin-bottom: 30px;">
+                    <p style="color: #666; font-size: 0.8rem; margin: 0 0 10px 10px; text-transform: uppercase;">Sito &
+                        Config</p>
+
+                    <button class="nav-btn" onclick="showTab('settings')">
+                        <i class="fas fa-cogs"></i> Impostazioni Sito
+                    </button>
+                    <button class="nav-btn" onclick="showTab('guest-teachers')">
+                        <i class="fas fa-user-tie"></i> Guest Teachers
+                    </button>
+                    <button class="nav-btn" onclick="showTab('pdf-mgmt')">
+                        <i class="fas fa-file-pdf"></i> Gestione PDF
+                    </button>
+                    <button class="nav-btn" onclick="showTab('newsletter')">
+                        <i class="fas fa-envelope-open-text"></i> Newsletter
+                    </button>
+                    <button class="nav-btn" onclick="showSection('timer', this)">
+                        <i class="fas fa-hourglass-half"></i> Timer Home
+                    </button>
+                    <!-- NUOVO BOTTONE EDITOR VISUALE -->
+                    <a href="index.html?visualEditor=true" class="nav-btn"
+                        style="text-decoration:none; display:flex; align-items:center; background: rgba(0, 210, 211, 0.1); color: #00d2d3; border: 1px solid #00d2d3; margin-top: 10px;">
+                        <i class="fas fa-edit" style="margin-right: 10px;"></i> Modifica Testi Sito
+                    </a>
+                </div>
+
+                <!-- AZIONI FINALI -->
+                <div style="margin-top: 20px;">
+                    <a href="index.html" class="nav-btn"
+                        style="text-decoration:none; display:flex; align-items:center; background: linear-gradient(135deg, #1B6CA8, #00B4D8); color: white; font-weight:bold; justify-content: flex-start; border:none;">
+                        <i class="fas fa-home" style="margin-right: 10px;"></i> Torna al Sito
+                    </a>
+                    <button class="nav-btn logout" onclick="logout()" style="margin-top: 10px;">
+                        <i class="fas fa-sign-out-alt"></i> Esci
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="content">
+
+            <div id="section-timer" class="admin-section" style="display: none;">
+                <h2>Gestione Timer Home Page</h2>
+                <div class="admin-card"
+                    style="background: #1e1e1e; border: 1px solid var(--color-hot-pink); border-radius: 8px; padding: 20px; max-width: 500px;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="color:#aaa; display:block; margin-bottom:10px;">Data Scadenza Countdown</label>
+                        <input type="datetime-local" id="timer-date-input"
+                            style="width: 100%; padding: 12px; background: #333; border: 1px solid #555; color: white; border-radius: 5px;">
+                    </div>
+                    <button onclick="saveTimerSettings()" class="btn btn-primary">
+                        <i class="fas fa-save"></i> SALVA DATA
+                    </button>
+                </div>
+            </div>
+
+            <div id="section-dashboard" class="admin-section">
+
+                <div id="tab-availability" class="tab-content active">
+                    <h1>Gestione Disponibilità Insegnanti</h1>
+                    <div class="card">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Insegnante</label>
+                                <select id="avail-teacher"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Giorno</label>
+                                <input type="date" id="avail-date">
+                            </div>
+                            <div class="form-group">
+                                <label>Inizio</label>
+                                <input type="time" id="avail-start" value="10:00">
+                            </div>
+                            <div class="form-group">
+                                <label>Fine</label>
+                                <input type="time" id="avail-end" value="18:00">
+                            </div>
+                            <button class="btn-add" onclick="addAvailability()">+ Aggiungi</button>
+                        </div>
+                    </div>
+                    <h3>Turni Attivi</h3>
+                    <div id="avail-list" class="list-container"></div>
+                    <div class="card" style="margin-top:20px; border-top:1px solid #333; padding-top:20px;">
+                        <h3 style="margin-top:0; color:var(--color-hot-pink);">Prenotazione Speciale (Admin)</h3>
+                        <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">Aggiungi Lecture o Group Lesson
+                            bloccando lo slot.</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Insegnante</label>
+                                <select id="special-teacher"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Data</label>
+                                <input type="date" id="special-date">
+                            </div>
+                            <div class="form-group">
+                                <label>Ora Inizio</label>
+                                <input type="time" id="special-start">
+                            </div>
+                            <div class="form-group" style="max-width:100px;">
+                                <label>Durata (min)</label>
+                                <input type="number" id="special-duration" value="45">
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select id="special-type">
+                                    <option value="Lecture">Lecture</option>
+                                    <option value="Group Lesson">Group Lesson</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="max-width:120px;">
+                                <label>Paga Staff (€)</label>
+                                <input type="number" id="special-pay" placeholder="0">
+                            </div>
+                            <button class="btn-add" onclick="addSpecialBooking()"
+                                style="background:#00d2d3; color:#2d3436;">Blocca Slot</button>
+                        </div>
+                    </div>
+
+                    <h3>Lezioni Speciali Attive</h3>
+                    <div id="special-bookings-list" class="list-container"></div>
+                </div>
+
+                <div id="tab-schedule" class="tab-content">
+                    <h1>Piano Giornaliero</h1>
+                    <div class="no-print control-bar">
+                        <select id="print-teacher" onchange="loadSchedule()">
+                            <option value="">Seleziona Insegnante...</option>
+                        </select>
+                        <input type="date" id="print-date" onchange="loadSchedule()">
+                        <button class="btn-print" onclick="window.print()">
+                            <i class="fas fa-print"></i> STAMPA
+                        </button>
+                        <button class="btn-print" onclick="downloadPDF()" style="background:#ff9f43; color:white;">
+                            <i class="fas fa-file-download"></i> DOWNLOAD
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="print-sheet" id="print-area">
+                            <header class="print-header">
+                                <img src="loghi/logo_favicon.png" alt="TC" style="height:50px;">
+                                <div class="header-text">
+                                    <h2 id="sheet-teacher-name">Nome Insegnante</h2>
+                                    <p id="sheet-date">Data: --/--/----</p>
+                                </div>
+                            </header>
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th width="15%">ORA</th>
+                                        <th width="50%">COPPIA / STUDENTE</th>
+                                        <th width="20%">SALA</th>
+                                        <th width="15%">NOTE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-body"></tbody>
+                            </table>
+                            <div class="print-footer">
+                                <p>Winter Tuscany Camp 2026 - Staff Signature: __________________</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-accounting" class="tab-content">
+                    <h1>Rendicontazione & Modifiche</h1>
+                    <div class="admin-card"
+                        style="background: #1e1e1e; border-left: 4px solid var(--color-hot-pink); padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                        <h3 style="margin-top: 0; font-size: 1.1rem; color: #fff;"><i class="fas fa-chart-pie"></i>
+                            Numero Lezioni Totali</h3>
+                        <div id="teachers-work-summary"
+                            style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <p style="color: #666; font-style: italic;">Caricamento statistiche...</p>
+                        </div>
+                    </div>
+                    <div class="admin-card"
+                        style="background: #1e1e1e; border-left: 4px solid #00d2d3; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                        <h3 style="margin-top: 0; font-size: 1.1rem; color: #fff;">
+                            <i class="fas fa-wallet"></i> Totale Prenotazioni per Utente
+                        </h3>
+                        <div id="users-payment-summary"
+                            style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <p style="color: #666; font-style: italic;">Calcolo importi...</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-card"
+                        style="background: #1e1e1e; border-left: 4px solid #feca57; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                        <h3 style="margin-top: 0; font-size: 1.1rem; color: #fff;">
+                            <i class="fas fa-money-bill-wave"></i> Totale Paga Staff (Stima)
+                        </h3>
+                        <div id="staff-pay-summary"
+                            style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <p style="color: #666; font-style: italic;">Calcolo... (Richiede Paga Staff impostata)</p>
+                        </div>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="text" id="search-booking" placeholder="Cerca..." onkeyup="searchBookings()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Data/Ora</th>
+                                    <th>Insegnante</th>
+                                    <th>Coppia/Singolo</th>
+                                    <th>Prezzo</th>
+                                    <th>Stato</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accounting-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-balances" class="tab-content">
+                    <h1>Saldato & Conti <span style="font-size:0.6em; color:#888;">(Pagamenti Lezioni Private)</span>
+                    </h1>
+                    <div class="search-bar">
+                        <input type="text" id="search-balance" placeholder="Cerca coppia o singolo..."
+                            onkeyup="filterBalances()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Utente / Coppia</th>
+                                    <th>Lezioni in sospeso</th>
+                                    <th>Totale da Saldare</th>
+                                    <th>Stato Globale</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="balances-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-messages" class="tab-content">
+                    <h1>Messaggi dal Sito</h1>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Nome</th>
+                                    <th>Messaggio</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="messages-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-registrations" class="tab-content">
+                    <h1>Iscritti Entry Form</h1>
+                    <div class="stats-row">
+                        <div class="card" style="text-align:center;">
+                            <h3>Iscritti</h3>
+                            <h2 id="total-reg-count" style="color:#00B4D8">0</h2>
+                        </div>
+                        <div class="card" style="text-align:center;">
+                            <h3>Incasso</h3>
+                            <h2 id="total-reg-money" style="color:#00B4D8">€ 0</h2>
+                        </div>
+                    </div>
+                    <input type="text" id="search-reg" placeholder="Cerca..." onkeyup="filterRegistrations()"
+                        class="search-bar">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Nome</th>
+                                    <th>Ruolo</th>
+                                    <th>Pacchetto</th>
+                                    <th>Totale</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrations-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-teachers-mgmt" class="tab-content">
+                    <h1>Gestione Insegnanti</h1>
+                    <div class="card">
+                        <div class="form-row">
+                            <input type="text" id="new-teacher-name" placeholder="Nome Cognome">
+                            <input type="email" id="new-teacher-email" placeholder="Email Login" style="width: 200px;">
+                            <input type="number" id="new-teacher-price" value="160" style="width:100px;"
+                                placeholder="Prezzo Pub">
+                            <input type="number" id="new-teacher-pay-rate" value="0" style="width:100px;"
+                                placeholder="Paga Staff">
+                            <input type="text" id="new-teacher-discipline" placeholder="Disciplina">
+                            <button class="btn-add" onclick="addNewTeacher()">+ Aggiungi</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Prezzo Pubblico</th>
+                                    <th>Paga Staff</th>
+                                    <th>Disciplina</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teachers-list-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-users-system" class="tab-content">
+                    <h1>Gestione Account (Sistema)</h1>
+                    <div class="stats-row">
+                        <div class="card">
+                            <h3>Totale Account</h3>
+                            <h2 id="sys-total-count">0</h2>
+                        </div>
+                        <div class="card">
+                            <h3>Form Mancanti</h3>
+                            <h2 id="sys-ghost-count" style="color:orange">0</h2>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Email</th>
+                                    <th>Ultimo Accesso</th>
+                                    <th>Stato Form</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="system-users-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-settings" class="tab-content">
+                    <h1>Impostazioni Globali</h1>
+                    <div class="admin-card"
+                        style="background: #1e1e1e; border: 1px solid var(--color-hot-pink); border-radius: 8px; padding: 20px; max-width: 600px;">
+                        <p style="color:#aaa; margin-bottom:20px;">Gestisci l'attivazione delle funzionalità principali
+                            del sito.</p>
+
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <div>
+                                <h3 style="margin: 0; color: white;">Iscrizione (Entry Form)</h3>
+                                <small style="color: #888;">Permetti o blocca nuove iscrizioni.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-entry-form" onchange="toggleSetting('entry_form')">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                            <div>
+                                <h3 style="margin: 0; color: white;">Prenotazione (Book Lesson)</h3>
+                                <small style="color: #888;">Permetti o blocca la prenotazione lezioni.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-book-lesson" onchange="toggleSetting('book_lesson')">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; color: #888; font-size: 0.8rem;">
+                        <p>Nota: Queste modifiche sono immediate.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="tab-guest-teachers" class="tab-content" style="padding:20px;">
+                <h1>Gestione Guest Teachers</h1>
+                <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                    <div style="flex:1; min-width:300px;">
+                        <h3 style="color:var(--color-hot-pink); margin-bottom:10px;">Standard Teachers</h3>
+                        <p style="color:#888; font-size:0.9rem; margin-bottom:10px;">Formato:
+                            <code>Nome Cognome (NAZ)</code> -
+                            Un nome per riga.
+                        </p>
+                        <textarea id="admin-guest-std"
+                            style="width:100%; height:400px; background:#222; border:1px solid #444; color:#fff; padding:15px; font-family:monospace; font-size:1rem; resize:vertical; border-radius:5px;"></textarea>
+                    </div>
+                    <div style="flex:1; min-width:300px;">
+                        <h3 style="color:var(--color-hot-pink); margin-bottom:10px;">Latin Teachers</h3>
+                        <p style="color:#888; font-size:0.9rem; margin-bottom:10px;">Formato:
+                            <code>Nome Cognome (NAZ)</code> -
+                            Un nome per riga.
+                        </p>
+                        <textarea id="admin-guest-lat"
+                            style="width:100%; height:400px; background:#222; border:1px solid #444; color:#fff; padding:15px; font-family:monospace; font-size:1rem; resize:vertical; border-radius:5px;"></textarea>
+                    </div>
+                </div>
+                <div style="margin-top:20px; text-align:right;">
+                    <button onclick="saveGuestTeachers()"
+                        style="padding:15px 30px; font-size:1.1rem; background:var(--color-hot-pink); color:white; border:none; cursor:pointer; border-radius:5px; width:100%; max-width:250px;">
+                        <i class="fas fa-save"></i> Salva Modifiche
+                    </button>
+                </div>
+            </div>
+
+            <div id="tab-pdf-mgmt" class="tab-content" style="padding:20px;">
+                <h1>Gestione PDF Download</h1>
+                <p style="color:#888; margin-bottom:20px;">Carica i nuovi file PDF per aggiornare i link di download sul
+                    sito.
+                    (Max 10MB)</p>
+
+                <div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+                    <!-- PROGRAMMA -->
+                    <div class="card"
+                        style="flex:1; min-width:300px; padding:20px; background:#1e1e1e; border:1px solid #333; border-radius:8px;">
+                        <h3 style="color:var(--color-hot-pink); margin-top:0;">Programma (Program)</h3>
+                        <p style="color:#aaa; font-size:0.9rem; margin-bottom:15px;" id="current-program-link">File
+                            attuale:
+                            <em>Nessuno</em>
+                        </p>
+
+                        <div style="background:#222; padding:15px; border-radius:5px;">
+                            <input type="file" id="pdf-program-file" accept="application/pdf"
+                                style="margin-bottom:10px; color:white; width:100%;">
+                            <button id="btn-upload-program" onclick="uploadPDF('program')"
+                                style="width:100%; padding:10px; background:#00d2d3; border:none; color:#111; font-weight:bold; cursor:pointer; border-radius:4px;">
+                                <i class="fas fa-upload"></i> Carica & Aggiorna Programma
+                            </button>
+                            <p id="pdf-program-status" style="margin-top:10px; font-size:0.9rem; font-weight:bold;"></p>
+                        </div>
+                    </div>
+
+                    <!-- PACCHETTI -->
+                    <div class="card"
+                        style="flex:1; min-width:300px; padding:20px; background:#1e1e1e; border:1px solid #333; border-radius:8px;">
+                        <h3 style="color:var(--color-hot-pink); margin-top:0;">Pacchetti (Packages)</h3>
+                        <p style="color:#aaa; font-size:0.9rem; margin-bottom:15px;" id="current-packages-link">File
+                            attuale:
+                            <em>Nessuno</em>
+                        </p>
+
+                        <div style="background:#222; padding:15px; border-radius:5px;">
+                            <input type="file" id="pdf-packages-file" accept="application/pdf"
+                                style="margin-bottom:10px; color:white; width:100%;">
+                            <button id="btn-upload-packages" onclick="uploadPDF('packages')"
+                                style="width:100%; padding:10px; background:#00d2d3; border:none; color:#111; font-weight:bold; cursor:pointer; border-radius:4px;">
+                                <i class="fas fa-upload"></i> Carica & Aggiorna Pacchetti
+                            </button>
+                            <p id="pdf-packages-status" style="margin-top:10px; font-size:0.9rem; font-weight:bold;">
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div id="tab-newsletter" class="tab-content" style="padding:20px;">
+                <h1>Newsletter (EmailJS)</h1>
+
+                <!-- SETTINGS BOX -->
+                <div class="card" style="margin-bottom:20px; border:1px solid #444;">
+                    <h3 style="color:var(--color-hot-pink); margin-top:0;">1. Configurazione</h3>
+                    <p style="color:#aaa; font-size:0.9rem;">
+                        Crea un template nella Dashboard di EmailJS con le variabili: <code>{{subject}}</code>,
+                        <code>{{message}}</code>, <code>{{to_email}}</code>.<br>
+                        Incolla qui il <strong>Template ID</strong>.
+                    </p>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <input type="text" id="newsletter-template-id" placeholder="Es. template_xyz123"
+                            style="flex:1;">
+                        <button onclick="saveNewsletterSettings()"
+                            style="background:#444; color:white; border:none; padding:10px 20px; cursor:pointer;">
+                            <i class="fas fa-save"></i> Salva ID
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display:flex; flex-direction: column; gap:20px;">
+
+                    <!-- COMPOSE BOX -->
+                    <div class="card" style="width:100%;">
+                        <h3 style="color:var(--color-hot-pink); margin-top:0;">2. Componi Messaggio</h3>
+
+                        <div class="form-group" style="margin-bottom:15px;">
+                            <label>Oggetto</label>
+                            <input type="text" id="newsletter-subject" placeholder="Oggetto della Newsletter...">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:15px;">
+                            <label>Messaggio</label>
+                            <textarea id="newsletter-message"
+                                style="width:100%; height:200px; background:#222; color:white; border:1px solid #444; padding:10px;"
+                                placeholder="Scrivi qui il tuo messaggio..."></textarea>
+                        </div>
+
+                        <div style="background:#222; padding:15px; border-radius:5px; margin-top:20px;">
+                            <h4 style="margin:0 0 10px 0;">Invio di Prova</h4>
+                            <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                                <input type="email" id="newsletter-test-email" placeholder="Email di test"
+                                    style="flex:1; min-width: 200px;">
+                                <button onclick="sendNewsletter(true)"
+                                    style="background:#00d2d3; color:black; border:none; padding:10px 20px; font-weight:bold; cursor:pointer;">
+                                    <i class="fas fa-paper-plane"></i> Invia Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECIPIENTS BOX -->
+                    <div class="card" style="width:100%;">
+                        <h3 style="color:var(--color-hot-pink); margin-top:0;">3. Destinatari</h3>
+
+                        <div style="text-align:center; padding:20px 0;">
+                            <div id="newsletter-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i>
+                                Caricamento...
+                            </div>
+                            <div id="newsletter-stats" style="font-size:3rem; font-weight:bold; color:white;">0</div>
+                            <p style="color:#aaa;">Email univoche totali (DB + Manuali).</p>
+                            <button onclick="loadNewsletterStats()"
+                                style="background:none; border:none; color:#00d2d3; cursor:pointer; text-decoration:underline;">
+                                <i class="fas fa-sync"></i> Ricarica da DB
+                            </button>
+                            <div id="newsletter-email-list" style="
+                                background: #111; 
+                                border: 1px solid #333; 
+                                margin-top: 15px;
+                                padding: 10px; 
+                                height: 150px; 
+                                overflow-y: auto; 
+                                text-align: left; 
+                                font-family: monospace; 
+                                font-size: 0.85rem; 
+                                color: #ccc;
+                                border-radius: 5px;
+                            ">
+                                <em>Clicca "Ricarica da DB" o aggiungi manuali...</em>
+                            </div>
+
+                            <!-- SEZIONE AGGIUNTA MANUALE -->
+                            <div
+                                style="margin-top: 15px; border-top: 1px solid #444; padding-top: 15px; text-align: left;">
+                                <h4 style="color:var(--color-hot-pink); margin:0 0 10px 0; font-size: 1rem;">Aggiungi
+                                    Manualmente</h4>
+                                <textarea id="manual-email-input"
+                                    placeholder="Incolla qui le email (separate da virgola o a capo)..."
+                                    style="width:100%; height:60px; background:#222; color:white; border:1px solid #444; padding:10px; font-size:0.85rem; resize: vertical;"></textarea>
+                                <div
+                                    style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                                    <small style="color:#888;">Le email errate verranno ignorate.</small>
+                                    <button onclick="addManualEmails()"
+                                        style="background:#444; color:white; border:none; padding:8px 15px; cursor:pointer; border-radius:4px; font-size: 0.9rem;">
+                                        <i class="fas fa-plus"></i> Aggiungi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-color:#444; margin:20px 0;">
+
+                        <button id="btn-send-all" onclick="sendNewsletter(false)"
+                            style="width:100%; background:var(--color-hot-pink); color:white; border:none; padding:15px; font-size:1.1rem; font-weight:bold; cursor:pointer; border-radius:5px;">
+                            <i class="fas fa-mail-bulk"></i> INVIA A TUTTI
+                        </button>
+
+                        <div id="newsletter-progress-container" style="display:none; margin-top:15px;">
+                            <div style="background:#444; height:10px; border-radius:5px; overflow:hidden;">
+                                <div id="newsletter-progress-bar"
+                                    style="width:0%; height:100%; background:#00d2d3; transition:width 0.3s;"></div>
+                            </div>
+                            <p id="newsletter-progress-text"
+                                style="text-align:center; font-size:0.8rem; margin-top:5px; color:#aaa;">0/0</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="admin-edit-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h2 style="color:var(--color-hot-pink); margin-top:0;">Modifica Prenotazione</h2>
+            <input type="hidden" id="edit-booking-id">
+            <div class="form-group"><label>Data Lezione</label><input type="date" id="edit-date"></div>
+            <div class="form-row">
+                <div class="form-group"><label>Inizio</label><input type="time" id="edit-start"></div>
+                <div class="form-group"><label>Fine</label><input type="time" id="edit-end"></div>
+            </div>
+            <div class="form-group"><label>Prezzo (€)</label><input type="number" id="edit-price"></div>
+            <div class="modal-actions">
+                <button onclick="closeEditModal()" class="btn-cancel">Annulla</button>
+                <button onclick="saveBookingChanges()" class="btn-save">Salva Modifiche</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reg-details-modal" class="modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+        <div class="form-card"
+            style="background: #121212; border: 1px solid #333; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative;">
+            <span onclick="closeRegModal()"
+                style="position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #fff;">&times;</span>
+            <h3
+                style="color: var(--color-hot-pink); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 20px;">
+                Dettagli Iscrizione</h3>
+            <div id="reg-details-content" style="text-align: left; line-height: 1.6; color: #ddd;">
+                <p>Caricamento...</p>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="closeRegModal()" class="btn btn-outline"
+                    style="padding: 8px 20px; border-color: #555; color: #ddd;">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="javascript/config.js"></script>
+    <script src="javascript/admin.js"></script>
+
+</body>
+
+</html>

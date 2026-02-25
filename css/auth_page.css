@@ -1,0 +1,134 @@
+/* =========================================
+   10. AUTH PAGE (LOGIN/SIGNUP)
+   ========================================= */
+/* --- FIX SPAZIO REGISTRAZIONE --- */
+
+.auth-section {
+    min-height: 100vh;
+    /* Occupa almeno tutta l'altezza dello schermo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Cerca di centrare verticalmente */
+
+    /* MODIFICA IMPORTANTE: Aumentiamo lo spazio sopra e sotto */
+    padding-top: 200px;
+    /* Più spazio dall'Header (era 100px) */
+    padding-bottom: 120px;
+    /* Più spazio dal Footer */
+
+    position: relative;
+    z-index: 10;
+    /* Assicura che stia sopra eventuali elementi di sfondo */
+}
+
+.auth-container {
+    background: rgba(20, 20, 20, .8);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-switch {
+    display: flex;
+    background: rgba(255, 255, 255, .05);
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.switch-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, .6);
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.switch-btn.active {
+    background: var(--color-hot-pink);
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 180, 216, .3);
+}
+
+.auth-form {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-form h3 {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.auth-subtitle {
+    color: rgba(255, 255, 255, .6);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: .9rem;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: .9rem;
+}
+
+.form-footer a {
+    color: var(--color-hot-pink);
+    text-decoration: none;
+}
+
+.auth-message {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: .9rem;
+    display: none;
+}
+
+.auth-message.error {
+    background: rgba(220, 53, 69, .2);
+    color: #ff6b6b;
+    border: 1px solid #dc3545;
+    display: block;
+}
+
+.auth-message.success {
+    background: rgba(40, 167, 69, .2);
+    color: #5dd07d;
+    border: 1px solid #28a745;
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

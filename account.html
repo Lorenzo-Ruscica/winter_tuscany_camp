@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="loghi/logo_favicon.png">
+    <link rel="apple-touch-icon" href="loghi/logo_favicon.png">
+    <title>My Profile | Winter Tuscany Camp 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="javascript/config.js"></script>
+    <script src="javascript/main.js"></script>
+    <script src="javascript/account.js"></script>
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/ui_bottons.css">
+<link rel="stylesheet" href="css/animazioni_utils.css">
+<link rel="stylesheet" href="css/header_nav.css">
+<link rel="stylesheet" href="css/global_footer.css">
+
+<link rel="stylesheet" href="css/hero_section.css">
+<link rel="stylesheet" href="css/sezioni.css">       <link rel="stylesheet" href="css/specific_pages.css"> <link rel="stylesheet" href="css/entryform_contact.css"> <link rel="stylesheet" href="css/auth_page.css">      <link rel="stylesheet" href="css/responsive.css">
+    
+    <style> 
+        /* CSS Specifico per questa pagina */
+        .profile-section { padding-top: 150px; padding-bottom: 100px; }
+        .profile-header { text-align: center; margin-bottom: 40px; }
+        .profile-header h1 { font-size: 3rem; margin-bottom: 10px; }
+        .profile-header p { color: rgba(255,255,255,0.6); }
+        
+        .danger-zone { border: 1px solid #dc3545; background: rgba(220, 53, 69, 0.05); }
+        .danger-zone h3 { color: #dc3545; }
+        .danger-zone p { color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .btn-danger { background: transparent; border: 1px solid #dc3545; color: #dc3545; }
+        .btn-danger:hover { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+<header id="navbar">
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programma.html">Program</a></li>
+                    <li><a href="guest-teachers.html">Guest Teachers</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="entry-form.html">Entry Form</a></li>
+                    <li><a href="booking.html" id="nav-booking">Book Lesson</a></li>
+                    <li><a href="photogallery.html">Photogallery</a></li>
+                    <li><a href="contatti.html">Contact</a></li>
+                    
+                    <li>
+                        <a href="login.html" id="nav-auth-link" style="display: flex; align-items: center;">
+                            <i class="fas fa-user" style="font-size: 1.2rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-links-container">
+            <a href="index.html">Home</a>
+            <a href="programma.html">Program</a>
+            <a href="guest-teachers.html">Guest Teachers</a>
+            <a href="packages.html">Packages</a>
+            <a href="entry-form.html">Entry Form</a>
+            <a href="booking.html" id="mobile-booking">Book Lesson</a>
+            <a href="photogallery.html">Photogallery</a>
+            <a href="contatti.html">Contact</a>
+
+            <a href="login.html" class="active" id="mobile-auth-link" class="mobile-auth-item">
+                <i class="fas fa-user"></i> <span>Account</span>
+            </a>
+        </div>
+    </div>
+    <section class="profile-section">
+        <div class="container" style="max-width: 800px;">
+            
+            <div class="profile-header fade-in-up">
+                <h1>My Account</h1>
+                <p>Manage your personal information and settings.</p>
+            </div>
+
+            <div class="form-card scroll-animate">
+                <h3>Personal Information</h3>
+                <form id="profileForm">
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="profName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="profSurname" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;">UPDATE INFO</button>
+                </form>
+            </div>
+
+            <div class="form-card scroll-animate">
+                <h3>Account Security</h3>
+                <form id="emailForm">
+                    <div class="form-group">
+                        <label>Current Email</label>
+                        <input type="email" id="profEmail" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>New Email</label>
+                        <input type="email" id="newEmail" placeholder="Enter new email">
+                    </div>
+                    <button type="submit" class="btn btn-outline btn-block" style="margin-top:20px;">CHANGE EMAIL</button>
+                </form>
+                <div id="updateMessage" style="margin-top:15px; text-align:center; display:none;"></div>
+            </div>
+
+            <div class="form-card scroll-animate">
+                <h3>Actions</h3>
+                <button onclick="handleLogout()" class="btn btn-outline btn-block">LOGOUT</button>
+            </div>
+
+            <div class="form-card danger-zone scroll-animate">
+                <h3>Danger Zone</h3>
+                <p>Deleting your account is irreversible. All your bookings will be lost.</p>
+                <button onclick="deleteAccount()" class="btn btn-block btn-danger">DELETE ACCOUNT</button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="copyright">&copy; 2026 Winter Tuscany Camp.</div>
+        </div>
+    </footer>
+<div id="custom-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h3 id="modal-title" style="color:var(--color-hot-pink); margin-bottom:15px;">Avviso</h3>
+            <p id="modal-message" style="margin-bottom:25px; color:rgba(255,255,255,0.8);">Messaggio...</p>
+            
+            <div class="modal-buttons" style="display:flex; gap:10px; justify-content:center;">
+                <button id="modal-btn-cancel" class="btn btn-outline" style="padding:10px 20px; display:none;">Annulla</button>
+                <button id="modal-btn-ok" class="btn btn-primary" style="padding:10px 20px;">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

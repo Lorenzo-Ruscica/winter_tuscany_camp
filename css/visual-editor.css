@@ -1,0 +1,18 @@
+.ve-hover {
+    outline: 2px dashed #00d2d3 !important;
+    outline-offset: 4px;
+    cursor: text !important;
+    transition: outline 0.2s;
+}
+
+.ve-editing {
+    outline: 2px solid var(--color-hot-pink) !important;
+    outline-offset: 4px;
+    background: rgba(0, 180, 216, 0.1) !important;
+    cursor: text !important;
+}
+
+[contenteditable="true"]:empty:before {
+    content: "Inserisci testo...";
+    color: #999;
+}

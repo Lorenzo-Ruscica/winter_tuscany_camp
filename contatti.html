@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="loghi/logo_favicon.png">
+    <link rel="apple-touch-icon" href="loghi/logo_favicon.png">
+    <title>Contact Us | Winter Tuscany Camp 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/ui_bottons.css">
+<link rel="stylesheet" href="css/animazioni_utils.css">
+<link rel="stylesheet" href="css/header_nav.css">
+<link rel="stylesheet" href="css/global_footer.css">
+
+<link rel="stylesheet" href="css/hero_section.css">
+<link rel="stylesheet" href="css/sezioni.css">       
+<link rel="stylesheet" href="css/specific_pages.css"> 
+<link rel="stylesheet" href="css/entryform_contact.css"> 
+<link rel="stylesheet" href="css/auth_page.css">      
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+<header id="navbar">
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programma.html">Program</a></li>
+                    <li><a href="guest-teachers.html">Guest Teachers</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="entry-form.html">Entry Form</a></li>
+                    <li><a href="booking.html" id="nav-booking">Book Lesson</a></li>
+                    <li><a href="photogallery.html">Photogallery</a></li>
+                    <li><a href="contatti.html" class="active">Contact</a></li>
+                    
+                    <li>
+                        <a href="login.html" id="nav-auth-link" style="display: flex; align-items: center;">
+                            <i class="fas fa-user" style="font-size: 1.2rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-links-container">
+            <a href="index.html">Home</a>
+            <a href="programma.html">Program</a>
+            <a href="guest-teachers.html">Guest Teachers</a>
+            <a href="packages.html">Packages</a>
+            <a href="entry-form.html">Entry Form</a>
+            <a href="booking.html" id="mobile-booking">Book Lesson</a>
+            <a href="photogallery.html">Photogallery</a>
+            <a href="contatti.html" class="active">Contact</a>
+
+            <a href="login.html" class="active" id="mobile-auth-link" class="mobile-auth-item">
+                <i class="fas fa-user"></i> <span>Account</span>
+            </a>
+        </div>
+    </div>
+    <section class="page-hero" >
+        <div class="container text-center" >
+            <h1 class="main-title fade-in-up" >Get in <span class="gradient-text">Touch</span></h1>
+            <div class="divider-line fade-in-up delay-1"></div>
+            <p class="fade-in-up delay-2" style="font-size: 1.2rem; color: var(--color-hot-pink);">We are here to answer any questions</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                
+<div class="contact-info-card scroll-animate">
+    <h3>Contact Info</h3>
+    <p>Reach out to us directly or fill the form.</p>
+
+    <div class="info-item">
+        <div class="icon-box">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="info-details">
+            <h4>Email Us</h4>
+            <p id="email-copy" style="cursor:pointer;" data-email="tuscanycamp@gmail.com">tuscanycamp@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="info-item">
+        <div class="icon-box">
+            <i class="fas fa-phone-alt"></i>
+        </div>
+        <div class="info-details">
+            <h4>Call Us</h4>
+            <p id="phone-copy" style="cursor:pointer;" data-number="+39 335 123 4567">+39 335 123 4567</p>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="https://www.youtube.com/channel/UCsz4XYKk1tw9Gr2PT_mwDeg?view_as=subscriber" class="icon-box" style="margin:0;">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+</div>
+
+<div class="contact-form-card scroll-animate delay-1">
+                    <h3>Send a Message</h3>
+                    
+                    <form id="contactForm" class="contact-form">
+                        
+                        <div class="form-group">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" placeholder="Your Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" placeholder="Your Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject">Subject</label>
+                            <input type="text" id="contactSubject" placeholder="What is this regarding?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <div class="form-footer" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-primary btn-block">SEND MESSAGE</button>
+                        </div>
+                    </form>
+                </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>WINTER TUSCANY CAMP</h2>
+                    <p>Since 1998</p>
+                </div>
+                <div class="footer-info">
+                    <h3>Contact Us</h3>
+                    <p>
+                        <a href="#" id="email-copy" data-email="tuscanycamp@gmail.com">
+                            <i class="fas fa-envelope"></i> tuscanycamp@gmail.com
+                        </a>
+                    </p>
+                    <p>
+                        <a href="#" id="phone-copy" data-number="+39 335 123 4567">
+                            <i class="fas fa-phone"></i> +39 335 123 4567
+                        </a>
+                    </p>
+                    <a href="https://youtube.com/@wintertuscanycamp2025?si=E5Bxv5cfyvPV1vb-" target="_blank" class="social-icon" title="Visit our YouTube channel">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Winter Tuscany Camp
+            </div>
+        </div>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="javascript/config.js"></script>
+<script src="javascript/main.js"></script>
+<script src="javascript/contact.js"></script>
+<div id="custom-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h3 id="modal-title" style="color:var(--color-hot-pink); margin-bottom:15px;">Avviso</h3>
+            <p id="modal-message" style="margin-bottom:25px; color:rgba(255,255,255,0.8);">Messaggio...</p>
+            
+            <div class="modal-buttons" style="display:flex; gap:10px; justify-content:center;">
+                <button id="modal-btn-cancel" class="btn btn-outline" style="padding:10px 20px; display:none;">Annulla</button>
+                <button id="modal-btn-ok" class="btn btn-primary" style="padding:10px 20px;">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

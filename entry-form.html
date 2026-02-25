@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="loghi/logo_favicon.png">
+    <link rel="apple-touch-icon" href="loghi/logo_favicon.png">
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <title>Entry Form | Winter Tuscany Camp 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/ui_bottons.css">
+    <link rel="stylesheet" href="css/animazioni_utils.css">
+    <link rel="stylesheet" href="css/header_nav.css">
+    <link rel="stylesheet" href="css/global_footer.css">
+    <link rel="stylesheet" href="css/specific_pages.css"> 
+    <link rel="stylesheet" href="css/entryform_contact.css">
+    <link rel="stylesheet" href="css/auth_page.css"> 
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/hero_section.css"> 
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <header id="navbar">
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programma.html">Program</a></li>
+                    <li><a href="guest-teachers.html">Guest Teachers</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="entry-form.html" class="active">Entry Form</a></li>
+                    <li><a href="booking.html" id="nav-booking">Book Lesson</a></li>
+                    <li><a href="photogallery.html">Photogallery</a></li>
+                    <li><a href="contatti.html">Contact</a></li>
+                    <li>
+                        <a href="login.html" id="nav-auth-link" style="display: flex; align-items: center;">
+                            <i class="fas fa-user" style="font-size: 1.2rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-links-container">
+            <a href="index.html">Home</a>
+            <a href="programma.html">Program</a>
+            <a href="guest-teachers.html">Guest Teachers</a>
+            <a href="packages.html">Packages</a>
+            <a href="entry-form.html" class="active">Entry Form</a>
+            <a href="booking.html" id="mobile-booking">Book Lesson</a>
+            <a href="photogallery.html">Photogallery</a>
+            <a href="contatti.html">Contact</a>
+            <a href="login.html" class="active" id="mobile-auth-link">
+                <i class="fas fa-user"></i> <span>Account</span>
+            </a>
+        </div>
+    </div>
+
+    <section class="page-hero">
+        <div class="container text-center">
+            <h1 class="main-title fade-in-up">Entry <span class="gradient-text">Form</span></h1>
+            <div class="divider-line fade-in-up delay-1"></div>
+            <p class="fade-in-up delay-2" style="font-size: 1.2rem; color: var(--color-hot-pink);">Book your experience at Winter Tuscany Camp</p>
+        </div>
+    </section>
+
+    <section class="entry-section">
+        <div class="container">
+            
+            <div class="alert-box fade-in-up delay-3">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="alert-content">
+                    <h4>IMPORTANT NOTICE</h4>
+                    <p>Your booking is confirmed <strong>ONLY</strong> when you receive the confirmation email.</p>
+                </div>
+            </div>
+
+            <div id="step-1-selection" class="fade-in-up delay-4">
+                <h2 style="color:white; margin-bottom:10px;">Who is registering?</h2>
+                <p style="color:#aaa;">Please select your role to reveal the form.</p>
+                
+                <div class="big-btn-container">
+                    <button class="big-type-btn" onclick="selectRegistrationStep('couple')">
+                        <i class="fas fa-user-friends"></i>
+                        <strong>Couple</strong>
+                    </button>
+
+                    <button class="big-type-btn" onclick="selectRegistrationStep('man')">
+                        <i class="fas fa-male"></i>
+                        <strong>Single Man</strong>
+                    </button>
+
+                    <button class="big-type-btn" onclick="selectRegistrationStep('woman')">
+                        <i class="fas fa-female"></i>
+                        <strong>Single Woman</strong>
+                    </button>
+                </div>
+            </div>
+
+           <form id="entryForm" style="display:none;">
+                
+                <input type="hidden" id="registrationType" value="couple">
+
+                <div class="booking-grid">
+                    
+                    <div class="form-column-left">
+                        
+                        <div class="form-card scroll-animate">
+                            <h3>1. Participants</h3>
+                            
+                            <div id="man-fields" class="form-section">
+                                <h4 style="color:var(--color-hot-pink); margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Man</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" id="manName" name="manName" required placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Surname</label>
+                                        <input type="text" id="manSurname" name="manSurname" required placeholder="Surname">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="woman-fields" class="form-section" style="margin-top: 15px;">
+                                <h4 style="color:var(--color-hot-pink); margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Woman</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" id="femaleName" name="femaleName" required placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Surname</label>
+                                        <input type="text" id="femaleSurname" name="femaleSurname" required placeholder="Surname">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card scroll-animate delay-1">
+                            <h3>2. General Info</h3>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" id="country" name="country" required placeholder="Italy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Teacher's Name</label>
+                                    <input type="text" id="teacherName" name="teacherName" required placeholder="Your Teacher">
+                                </div>
+                                <div class="form-group">
+                                    <label>Age Group</label>
+                                    <input type="text" id="ageGroup" name="ageGroup" required placeholder="Es: Under 21, Senior...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card scroll-animate delay-2">
+                            <h3>3. Contact Info</h3>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div style="display: flex; gap: 10px;">
+                                        <select id="phonePrefix" name="phonePrefix" style="width: 110px; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 5px;">
+                                            <option value="+39">🇮🇹 +39</option> <option value="+1">🇺🇸 +1</option> <option value="+44">🇬🇧 +44</option> <option value="+49">🇩🇪 +49</option> <option value="+33">🇫🇷 +33</option> <option value="">Other</option>
+                                        </select>
+                                        <input type="tel" id="phone" name="phone" required placeholder="123 456 7890" style="flex: 1;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" id="email" name="email" required placeholder="email@example.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card scroll-animate delay-3">
+                            <h3>4. Select Package</h3>
+                            <p class="section-subtitle">Prices are per person.</p>
+                            <div class="package-selection">
+                                <label class="pkg-option"><input type="radio" name="package" value="Basic" data-price="65" required><div class="pkg-box basic-box"><div class="pkg-name">BASIC</div><div class="pkg-price">€ 65</div></div></label>
+                                <label class="pkg-option"><input type="radio" name="package" value="Bronze" data-price="100"><div class="pkg-box bronze-box"><div class="pkg-name">BRONZE</div><div class="pkg-price">€ 100</div></div></label>
+                                <label class="pkg-option"><input type="radio" name="package" value="Silver" data-price="160" checked><div class="pkg-box silver-box"><div class="pkg-name">SILVER</div><div class="pkg-price">€ 160</div><span class="badge">Popular</span></div></label>
+                                <label class="pkg-option"><input type="radio" name="package" value="Gold" data-price="220"><div class="pkg-box gold-box"><div class="pkg-name">GOLD</div><div class="pkg-price">€ 220</div></div></label>
+                                <label class="pkg-option"><input type="radio" name="package" value="Platinum" data-price="270"><div class="pkg-box platinum-box"><div class="pkg-name">PLATINUM</div><div class="pkg-price">€ 270</div></div></label>
+                            </div>
+                        </div>
+
+                        <div class="form-card scroll-animate delay-3">
+                            <h3>5. Logistics & Extras</h3>
+                            <div class="form-group">
+                                <label>Extra Nights (Max 2)</label>
+                                <div class="nights-selector">
+                                    <button type="button" class="btn-night active" data-value="0">No</button>
+                                    <button type="button" class="btn-night" data-value="1">1 Night</button>
+                                    <button type="button" class="btn-night" data-value="2">2 Nights</button>
+                                </div>
+                                <input type="hidden" id="extraNights" name="extraNights" value="0">
+                            </div>
+                            <div class="logistics-grid">
+                                <div class="log-group"><h4>Arrival</h4><div class="input-row"><div class="form-group"><label>Date</label><input type="date" id="arrivalDate" name="arrivalDate"></div><div class="form-group"><label>Time</label><input type="time" id="arrivalTime" name="arrivalTime"></div></div></div>
+                                <div class="log-group"><h4>Departure</h4><div class="input-row"><div class="form-group"><label>Date</label><input type="date" id="departureDate" name="departureDate"></div><div class="form-group"><label>Time</label><input type="time" id="departureTime" name="departureTime"></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-column-right">
+                        
+                        <div class="summary-card" id="stickySummary">
+                            <h3>Order Summary</h3>
+                            <div class="summary-lines">
+                                <div class="line">
+                                    <span id="summary-pkg-name">Silver Package</span>
+                                    <span id="summary-pkg-price">€ 160</span>
+                                </div>
+                                <div class="line">
+                                    <span>Extra Nights (x<span id="summary-night-count">0</span>)</span>
+                                    <span id="summary-night-total">€ 0</span>
+                                </div>
+                                <hr>
+                                <div class="line total">
+                                    <span>TOTAL</span>
+                                    <span id="summary-total">€ 160</span>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" id="btnProceed" class="btn btn-primary btn-block">
+                                PROCEED TO PAYMENT
+                            </button>
+                            <p class="secure-note"><i class="fas fa-lock"></i> Secure Payment</p>
+                        </div>
+                        <div id="bank-details-box" class="summary-card" style="display: none; margin-top: 20px; border: 1px solid #444; background: rgba(255,255,255,0.05);">
+    <h4 style="color: var(--color-hot-pink); margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 15px;">
+        <i class="fas fa-university"></i> Bank Transfer Details
+    </h4>
+    
+    <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 5px;">IBAN:</p>
+    <div style="background: #111; padding: 10px; border-radius: 4px; font-family: monospace; color: #fff; border: 1px dashed #666; margin-bottom: 10px; font-size: 1rem;">
+        IT 98 C 02008 70691 000401444918
+    </div>
+
+    <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 5px;">SWIFT CODE:</p>
+    <div style="color: white; font-weight: bold; margin-bottom: 10px;">UNCRITM1CEC</div>
+</div>
+
+                        <div id="change-type-box" class="change-type-card" style="display: block;">
+                            <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Did you select the wrong role?</p>
+                            <button type="button" id="btnBackToStep1" class="btn-change-type">
+                                <i class="fas fa-undo"></i> Change Registration Type
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div> </form>
+        </div>
+    </section>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-modal">&times;</span>
+            
+            <div style="margin-bottom: 20px; color: var(--color-hot-pink);">
+                <i class="fas fa-university" style="font-size: 3rem;"></i>
+            </div>
+            
+            <h3>Bank Transfer Payment</h3>
+            
+            <p style="color: #ccc; margin: 15px 0;">
+                To confirm your registration for the <strong id="modalPkgName" style="color:white">Package</strong>, please proceed with the bank transfer.
+            </p>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left; border: 1px solid #444;">
+                <p style="margin:0 0 5px; font-size: 0.9rem; color: #aaa;">Total Amount:</p>
+                <strong id="modalTotal" style="font-size: 1.5rem; color: var(--color-hot-pink); display:block; margin-bottom:15px;">€ 0</strong>
+                
+                <p style="margin:0; font-size: 0.8rem; color: #aaa;">IBAN:</p>
+                <div style="background: #000; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 1.1rem; color: white; border: 1px dashed #666; margin-bottom: 10px;">
+                    IT00 X000 0000 0000 0000 0000 000
+                </div>
+                
+                <p style="margin:0; font-size: 0.8rem; color: #aaa;">Beneficiary:</p>
+                <strong style="color: white;">Winter Tuscany Camp ASD</strong>
+                
+                <p style="margin:10px 0 0; font-size: 0.8rem; color: #aaa;">Reason / Causale:</p>
+                <strong style="color: white;">Name Surname - Winter Tuscany Camp 2026</strong>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 25px;">
+                Click below to confirm your registration. You will receive a summary email.
+            </p>
+
+            <form id="paymentForm">
+                <button type="submit" class="btn btn-primary btn-block" style="background-color: #2ecc71; border-color: #2ecc71;">
+                    CONFIRM REGISTRATION <i class="fas fa-check" style="margin-left:8px;"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content" style="text-align: center; max-width: 400px;">
+            <div style="margin-bottom: 20px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: #2ecc71;"></i>
+            </div>
+            <h3 style="color: white; margin-bottom: 10px;">Success!</h3>
+            <p style="color: #ccc; margin-bottom: 25px;">Your information has been updated successfully.</p>
+            <button id="btn-close-success" class="btn btn-primary" style="background-color: #2ecc71;">OK</button>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>WINTER TUSCANY CAMP</h2>
+                    <p>Since 1998</p>
+                </div>
+                <div class="footer-info">
+                    <h3>Contact Us</h3>
+                    <p><a href="#" id="email-copy" data-email="tuscanycamp@gmail.com"><i class="fas fa-envelope"></i> tuscanycamp@gmail.com</a></p>
+                    <p><a href="#" id="phone-copy" data-number="+39 335 123 4567"><i class="fas fa-phone"></i> +39 335 123 4567</a></p>
+                    <a href="https://youtube.com/@wintertuscanycamp2025" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 Winter Tuscany Camp. Design inspired by the passion for dance.</div>
+        </div>
+    </footer>
+    <div id="custom-modal" class="modal" style="display:none; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);">
+        <div class="modal-content" style="max-width: 400px; text-align: center; border: 1px solid var(--color-hot-pink);">
+            
+            <div style="margin-bottom: 20px;">
+                <i class="fas fa-user-lock" style="font-size: 3rem; color: var(--color-hot-pink);"></i>
+            </div>
+
+            <h3 id="modal-title" style="color:white; margin-bottom:15px;">Login Required</h3>
+            <p id="modal-message" style="margin-bottom:25px; color:#ccc;">You must be logged in to access the Entry Form.</p>
+            
+            <div class="modal-buttons" style="display:flex; gap:10px; justify-content:center;">
+                <button id="modal-btn-cancel" class="btn btn-outline" style="padding:10px 20px; display:none;">Cancel</button>
+                
+                <button id="modal-btn-ok" class="btn btn-primary" style="padding:10px 30px;">GO TO LOGIN</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="javascript/config.js"></script> 
+    <script src="javascript/main.js"></script>
+    <script src="javascript/email_service.js"></script>
+    <script src="javascript/entry-formy.js"></script> 
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="loghi/logo_favicon.png">
+    <link rel="apple-touch-icon" href="loghi/logo_favicon.png">
+    <title>Book Lesson | Winter Tuscany Camp</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/variables.css">
+    
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/ui_bottons.css">
+    <link rel="stylesheet" href="css/animazioni_utils.css">
+    <link rel="stylesheet" href="css/header_nav.css">
+    <link rel="stylesheet" href="css/global_footer.css">
+    <link rel="stylesheet" href="css/booking_styles.css"> 
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("HvNxuhIR0mdVRUIhR"); // Tua Public Key
+       })();
+    </script>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div id="access-loader" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:9999; display:flex; justify-content:center; align-items:center; flex-direction:column;">
+        <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--color-hot-pink);"></i>
+        <p style="color:white; margin-top:20px; font-family:'Outfit', sans-serif;">Checking Access...</p>
+    </div>
+
+    <header id="navbar">
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programma.html">Program</a></li>
+                    <li><a href="guest-teachers.html">Guest Teachers</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="entry-form.html">Entry Form</a></li>
+                    <li><a href="booking.html" id="nav-booking" class="active">Book Lesson</a></li>
+                    <li><a href="photogallery.html">Photogallery</a></li>
+                    <li><a href="contatti.html">Contact</a></li>
+                    <li>
+                        <a href="login.html" id="nav-auth-link" style="display: flex; align-items: center;">
+                            <i class="fas fa-user" style="font-size: 1.2rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-links-container">
+            <a href="index.html">Home</a>
+            <a href="programma.html">Program</a>
+            <a href="guest-teachers.html">Guest Teachers</a>
+            <a href="packages.html">Packages</a>
+            <a href="entry-form.html">Entry Form</a>
+            <a href="booking.html" id="mobile-booking" class="active">Book Lesson</a>
+            <a href="photogallery.html">Photogallery</a>
+            <a href="contatti.html">Contact</a>
+            <a href="login.html" class="active" id="mobile-auth-link">
+                <i class="fas fa-user"></i> <span>Account</span>
+            </a>
+        </div>
+    </div>
+
+    <section class="booking-section">
+        
+        <div class="container fade-in-up">
+            
+            <h1 class="main-title">Booking <span class="gradient-text">Lessons</span></h1>
+            <p class="subtitle">Select your teacher and schedule your time.</p>
+            <div class="booking-notice">
+                <i class="fas fa-envelope-open-text"></i>
+                <p>
+                    Important: Your booking is confirmed <strong>only upon receipt of the confirmation email</strong>.
+                </p>
+            </div>
+
+            <div id="access-denied-box" class="access-denied-card" style="display: none;">
+                <div class="icon-wrapper">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2>Registration Required</h2>
+                <p style="color: #ccc; margin-bottom: 30px;">You must complete the Entry Form before booking lessons.</p>
+                <a href="entry-form.html" class="btn btn-primary">GO TO ENTRY FORM</a>
+            </div>
+
+            <div id="booking-main-content" style="display: none;">
+                
+                <div class="booking-container-vertical">
+                    
+                    <div class="booking-form-area form-card">
+                        <h3><i class="far fa-calendar-alt"></i> New Booking</h3>
+                        
+                        <div class="form-group">
+                            <label>Teacher</label>
+                            <div class="custom-select-wrapper">
+                                <select id="teacherSelect">
+                                    <option value="" disabled selected>Loading teachers...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="dateGroup" style="opacity: 0.5; pointer-events: none;">
+                            <label>Date</label>
+                            <div id="dates-container" class="dates-grid">
+                                <div class="slot-placeholder">Select a teacher first</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="timeGroup" style="opacity: 0.5; pointer-events: none;">
+                            <label>Time Slot (45 min)</label>
+                            <div id="slots-container" class="slots-grid">
+                                <div class="slot-placeholder">Select a date first</div>
+                            </div>
+                        </div>
+
+                        <button id="btn-confirm-booking" class="btn btn-primary btn-block" style="display: none;">
+                            CONFIRM BOOKING (€ <span id="price-preview">0</span>)
+                        </button>
+                    </div>
+
+                    <div class="my-bookings-area-wide">
+                        <div class="summary-card-wide">
+                            <h3><i class="fas fa-list-check"></i> My Lessons</h3>
+                            
+                            <div id="my-bookings-list">
+                                <p style="text-align: center; color: rgba(255,255,255,0.6); padding: 20px;">No lessons booked yet.</p>
+                            </div>
+
+                            <div class="total-row-big">
+                                <span>Total Due:</span>
+                                <span id="grand-total-display">€ 0</span>
+                            </div>
+                            
+                            <div class="payment-info">
+                                <i class="fas fa-wallet"></i> Payment will be collected at the Winter Tuscany Camp desk.
+                            </div>
+                        </div>
+                    </div>
+
+                </div> </div> </div> </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>WINTER TUSCANY CAMP</h2>
+                    <p>Since 1998</p>
+                </div>
+                <div class="footer-info">
+                    <h3>Contact</h3>
+                    <p>
+                        <a href="#" id="email-copy" data-email="tuscanycamp@gmail.com">
+                            <i class="fas fa-envelope"></i> tuscanycamp@gmail.com
+                        </a>
+                    </p>
+                    <p>
+                        <a href="#" id="phone-copy" data-number="+39 335 123 4567">
+                            <i class="fas fa-phone"></i> +39 335 123 4567
+                        </a>
+                    </p>
+                    <a href="https://youtube.com/@wintertuscanycamp2025?si=E5Bxv5cfyvPV1vb-" target="_blank" class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Winter Tuscany Camp. 
+            </div>
+        </div>
+    </footer>
+
+    <div id="custom-modal-overlay" class="custom-modal-overlay" style="display: none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center;">
+        <div class="form-card" style="max-width: 400px; text-align: center; border: 1px solid var(--color-hot-pink);">
+            <div style="font-size: 2rem; color: var(--color-hot-pink); margin-bottom: 10px;">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h3 id="modal-title" style="border:none;">Notice</h3> 
+            <p id="modal-message" style="color: #ccc; margin-bottom: 20px;">Loading...</p>
+            
+            <div style="display:flex; justify-content:center; gap:10px;">
+                <button id="modal-btn-cancel" class="btn btn-outline" style="padding: 10px 20px;">Cancel</button> 
+                <button id="modal-btn-confirm" class="btn btn-primary" style="padding: 10px 20px; margin:0;">Confirm</button> 
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="javascript/config.js"></script>
+    <script src="javascript/main.js"></script>
+    <script src="javascript/booking.js"></script> 
+</body>
+
+</html>

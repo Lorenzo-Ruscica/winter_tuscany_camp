@@ -1,0 +1,430 @@
+/* =========================================
+   BOOKING PAGE SPECIFIC STYLES
+   (Vertical Layout & Design Match)
+   ========================================= */
+
+/* 1. SEZIONE PRINCIPALE */
+.booking-section {
+    padding-top: 150px;
+    /* Spazio per la navbar fissa */
+    padding-bottom: 100px;
+    position: relative;
+    z-index: 10;
+    /* Sopra lo sfondo animato */
+}
+
+/* Titoli */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--color-white);
+}
+
+.subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    /* Spazio prima del contenuto */
+    letter-spacing: 1px;
+}
+
+/* 2. LAYOUT VERTICALE (CENTRATO) */
+.booking-container-vertical {
+    display: flex;
+    flex-direction: column;
+    /* Elementi uno sotto l'altro */
+    align-items: center;
+    /* Centra orizzontalmente */
+    gap: 40px;
+    /* Spazio tra il form e la lista */
+    width: 100%;
+    max-width: 800px;
+    /* Larghezza massima per leggibilità */
+    margin: 0 auto;
+    /* Centra il contenitore nella pagina */
+}
+
+/* 3. STILE CARDS (Effetto Vetro / Glassmorphism) */
+.form-card,
+.summary-card-wide,
+.access-denied-card {
+    background: rgba(255, 255, 255, 0.03);
+    /* Sfondo molto trasparente */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Bordo sottile */
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    /* Sfocatura sfondo */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    /* Occupa tutta la larghezza del contenitore padre */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.form-card:hover,
+.summary-card-wide:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 180, 216, 0.3);
+    /* Colore azzurro al passaggio del mouse */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Intestazioni delle Card */
+.form-card h3,
+.summary-card-wide h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--color-hot-pink);
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+/* 4. FORM ELEMENTS */
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Custom Select */
+select {
+    width: 100%;
+    padding: 15px;
+    background-color: #0a0a0a;
+    /* Sfondo scuro per contrasto */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    /* Molto arrotondato */
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    appearance: none;
+    /* Nasconde freccia default */
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--color-hot-pink);
+}
+
+/* Wrapper per la freccina custom */
+.custom-select-wrapper {
+    position: relative;
+}
+
+.custom-select-wrapper::after {
+    content: '\f078';
+    /* FontAwesome chevron down */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-hot-pink);
+    pointer-events: none;
+}
+
+/* 5. GRIGLIE DATE E ORARI */
+.dates-grid,
+.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+}
+
+/* Bottoni selezione (piccoli) */
+.date-btn,
+.time-slot {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.date-btn:hover,
+.time-slot:hover {
+    border-color: var(--color-hot-pink);
+    color: white;
+}
+
+.date-btn.selected,
+.time-slot.selected {
+    background: var(--color-hot-pink);
+    color: white;
+    border-color: var(--color-hot-pink);
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+    font-weight: bold;
+}
+
+.time-slot.taken {
+    opacity: 0.3;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    border-color: transparent;
+    /* Rimuove bordo per slot occupati */
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.slot-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* 6. LISTA PRENOTAZIONI (MY LESSONS) */
+.my-bookings-area-wide {
+    width: 100%;
+    /* Occupa tutto lo spazio nella card verticale */
+}
+
+.booking-item {
+    background: rgba(0, 0, 0, 0.4);
+    /* Sfondo leggermente più scuro */
+    border-left: 4px solid var(--color-hot-pink);
+    /* Accento rosa a sinistra */
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 0 10px 10px 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Spazio tra gli elementi interni */
+    transition: background 0.3s;
+}
+
+.booking-item:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.booking-item h4 {
+    margin: 0;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+}
+
+.booking-item .details {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+.booking-item .price {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--color-hot-pink);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.booking-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    /* Allinea a destra */
+    gap: 10px;
+}
+
+/* Bottoni Edit/Delete piccoli */
+.btn-action-small {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #aaa;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-action-small:hover {
+    border-color: var(--color-hot-pink);
+    color: white;
+}
+
+.btn-action-small.delete:hover {
+    border-color: #ff4d4d;
+    /* Rosso per delete */
+    color: #ff4d4d;
+}
+
+/* Totali e Info Pagamento */
+.total-row-big {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+#grand-total-display {
+    color: var(--color-hot-pink);
+}
+
+.payment-info {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* 7. ACCESS DENIED BOX */
+.access-denied-card {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.access-denied-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: white;
+    margin: 20px 0;
+}
+
+.icon-wrapper {
+    font-size: 4rem;
+    color: var(--color-hot-pink);
+    margin-bottom: 20px;
+}
+
+/* Mobile Responsiveness Extra */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .booking-section {
+        padding-top: 120px;
+    }
+
+    .form-card,
+    .summary-card-wide {
+        padding: 20px;
+        /* Meno padding su mobile */
+    }
+}
+
+/* =========================================
+   NEW: BOOKING NOTICE STYLE
+   ========================================= */
+.booking-notice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    background: rgba(255, 255, 255, 0.05);
+    /* Sfondo leggero vetro */
+    border: 1px solid rgba(0, 180, 216, 0.5);
+    /* Bordo azzurro tenue */
+    padding: 15px 30px;
+    border-radius: 50px;
+    /* A pillola */
+
+    margin-bottom: 50px;
+    /* Spazio sotto prima del form */
+    max-width: 90%;
+
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.booking-notice:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-hot-pink);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.booking-notice i {
+    color: var(--color-hot-pink);
+    font-size: 1.3rem;
+}
+
+.booking-notice p {
+    margin: 0;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-family: 'Outfit', sans-serif;
+}
+
+.booking-notice strong {
+    color: white;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--color-hot-pink);
+}
+
+/* Stile card prenotazioni utente */
+.booking-card {
+    background: #1e1e1e;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #333;
+}
+
+.booking-card .btn-mini {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 0.85rem;
+}
+
+.booking-card .btn-mini.edit {
+    background-color: #f39c12;
+}
+
+.booking-card .btn-mini.delete {
+    background-color: #e74c3c;
+}

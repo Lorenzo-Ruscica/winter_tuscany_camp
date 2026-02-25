@@ -1,0 +1,236 @@
+/* =========================================
+   6. SEZIONI: Location, Info, Program, etc.
+   ========================================= */
+
+/* Location */
+.location-section {
+    padding: 100px 0;
+    background: transparent;
+    border: none;
+    position: relative;
+    z-index: 5;
+}
+
+.location-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.location-text h2 {
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.location-text .highlight {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-white);
+    opacity: .9;
+}
+
+.location-img {
+    flex: 1;
+    max-width: 600px;
+}
+
+.location-img img {
+    width: 100%;
+    border-radius: 30px 0 30px 0;
+    border: 1px solid var(--color-hot-pink);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.5s ease;
+}
+
+.location-img:hover img {
+    transform: scale(1.02);
+}
+
+/* Info Section (Cards) */
+.info-section {
+    padding: 80px 0;
+}
+
+.section-header {
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-top: 5px;
+}
+
+.section-header .tag {
+    color: var(--color-hot-pink);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
+
+.info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(.175, .885, .32, 1.275);
+    backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.card-image {
+    width: 100%;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.card-content {
+    padding: 20px 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-box {
+    font-size: 1.5rem;
+    color: var(--color-hot-pink);
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    margin-top: -45px;
+    position: relative;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(5px);
+}
+
+.info-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--color-white);
+}
+
+.info-card p {
+    font-size: .9rem;
+    color: rgba(255, 255, 255, .7);
+    margin-bottom: 20px;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.info-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-pink-red);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.info-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.info-card:hover .btn-block {
+    background: var(--color-hot-pink);
+    color: var(--color-white);
+}
+
+.info-card:hover .icon-box {
+    background: var(--color-hot-pink);
+    color: var(--color-white);
+    border-color: var(--color-hot-pink);
+}
+
+/* =========================================
+   CTA REGISTRATION SECTION
+   ========================================= */
+.cta-section {
+    padding: 60px 0;
+    position: relative;
+    z-index: 10;
+}
+
+.cta-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-hot-pink);
+    border-radius: 30px;
+    /* Un po' meno arrotondato */
+    padding: 40px 30px;
+    /* Meno spazio interno (Era 60px 40px) */
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(0, 180, 216, 0.15);
+    max-width: 700px;
+    /* Più stretto (Era 900px) */
+    margin: 0 auto;
+    transition: transform 0.4s ease;
+}
+
+.cta-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 50px rgba(0, 180, 216, 0.3);
+}
+
+.cta-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--color-white);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.cta-box p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.btn-large {
+    padding: 18px 50px;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+/* Adattamento Mobile */
+@media (max-width: 768px) {
+    .cta-box {
+        padding: 40px 20px;
+        width: 95%;
+    }
+
+    .cta-box h2 {
+        font-size: 2.5rem;
+    }
+
+    .cta-box p {
+        font-size: 1rem;
+    }
+}

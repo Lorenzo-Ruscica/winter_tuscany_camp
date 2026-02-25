@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="loghi/logo_favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="loghi/logo_favicon.png">
+    <link rel="apple-touch-icon" href="loghi/logo_favicon.png">
+    <title>Login / Sign Up | Winter Tuscany Camp 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/ui_bottons.css">
+<link rel="stylesheet" href="css/animazioni_utils.css">
+<link rel="stylesheet" href="css/header_nav.css">
+<link rel="stylesheet" href="css/global_footer.css">
+
+<link rel="stylesheet" href="css/hero_section.css">
+<link rel="stylesheet" href="css/sezioni.css">       <link rel="stylesheet" href="css/specific_pages.css"> <link rel="stylesheet" href="css/entryform_contact.css"> <link rel="stylesheet" href="css/auth_page.css">      <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+<header id="navbar">
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programma.html">Program</a></li>
+                    <li><a href="guest-teachers.html">Guest Teachers</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="entry-form.html">Entry Form</a></li>
+                    <li><a href="booking.html" id="nav-booking">Book Lesson</a></li>
+                    <li><a href="photogallery.html">Photogallery</a></li>
+                    <li><a href="contatti.html">Contact</a></li>
+                    
+                    <li>
+                        <a href="login.html" id="nav-auth-link" style="display: flex; align-items: center;">
+                            <i class="fas fa-user" style="font-size: 1.2rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-links-container">
+            <a href="index.html">Home</a>
+            <a href="programma.html">Program</a>
+            <a href="guest-teachers.html">Guest Teachers</a>
+            <a href="packages.html">Packages</a>
+            <a href="entry-form.html">Entry Form</a>
+            <a href="booking.html" id="mobile-booking">Book Lesson</a>
+            <a href="photogallery.html">Photogallery</a>
+            <a href="contatti.html">Contact</a>
+
+            <a href="login.html" class="active" id="mobile-auth-link" class="mobile-auth-item">
+                <i class="fas fa-user"></i> <span>Account</span>
+            </a>
+        </div>
+    </div>
+    <section class="auth-section">
+        <div class="container">
+            
+            <div class="auth-container fade-in-up">
+                
+                <div class="auth-switch">
+                    <button class="switch-btn active" id="btn-login">Login</button>
+                    <button class="switch-btn" id="btn-signup">Sign Up</button>
+                </div>
+
+                <form id="loginForm" class="auth-form active">
+                    <h3>Welcome Back</h3>
+                    <p class="auth-subtitle">Access your personal area to book lessons.</p>
+                    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required placeholder="********">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">LOG IN</button>
+                    <div class="form-footer">
+                        <a href="#" id="forgot-link">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <form id="signupForm" class="auth-form">
+                    <h3>Create Account</h3>
+                    <p class="auth-subtitle">Join Winter Tuscany Camp 2026.</p>
+                    
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="regName" required placeholder="Mario">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="regSurname" required placeholder="Rossi">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" required placeholder="Create a password (min 6 chars)">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">SIGN UP</button>
+                </form>
+
+                <div id="authMessage" class="auth-message"></div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 Winter Tuscany Camp.
+            </div>
+        </div>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="javascript/config.js"></script>
+<script src="javascript/main.js"></script>
+<script src="javascript/auth.js"></script>
+<div id="custom-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h3 id="modal-title" style="color:var(--color-hot-pink); margin-bottom:15px;">Avviso</h3>
+            <p id="modal-message" style="margin-bottom:25px; color:rgba(255,255,255,0.8);">Messaggio...</p>
+            
+            <div class="modal-buttons" style="display:flex; gap:10px; justify-content:center;">
+                <button id="modal-btn-cancel" class="btn btn-outline" style="padding:10px 20px; display:none;">Annulla</button>
+                <button id="modal-btn-ok" class="btn btn-primary" style="padding:10px 20px;">OK</button>
+            </div>
+        </div>
+    </div>
+    <div id="reset-modal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <h3 style="color:var(--color-hot-pink); margin-bottom:15px;">Reset Password</h3>
+        <p style="margin-bottom:20px; color:rgba(255,255,255,0.8);">Enter your email address to receive a reset link.</p>
+        
+        <div class="form-group" style="margin-bottom:20px;">
+            <input type="email" id="reset-email" placeholder="name@example.com" style="text-align:center;">
+        </div>
+
+        <div class="modal-buttons" style="display:flex; gap:10px; justify-content:center;">
+            <button id="btn-cancel-reset" class="btn btn-outline" style="padding:10px 20px;">Cancel</button>
+            <button id="btn-confirm-reset" class="btn btn-primary" style="padding:10px 20px;">Send Link</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

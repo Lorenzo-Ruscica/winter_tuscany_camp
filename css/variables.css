@@ -1,0 +1,174 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    /* NOTE: Legacy variable names are kept, but now map to winter colors */
+    --color-dark-red: #0A2540; /* Dark Navy */
+    --color-white: #FFF;
+    --color-pink-red: #1B6CA8; /* Blue */
+    --color-hot-pink: #00B4D8; /* Cyan / Ice Blue */
+    --color-black: #000;
+    --color-plum: #0F4C75; /* Deep Indigo / Blue */
+    
+    --bg-main: var(--color-black);
+    --text-main: var(--color-white);
+    
+    --primary-gradient: linear-gradient(135deg, var(--color-dark-red), var(--color-pink-red));
+    --accent-gradient: linear-gradient(135deg, var(--color-pink-red), var(--color-hot-pink));
+    
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(20px);
+    
+    --radius-lg: 30px;
+    --radius-md: 20px;
+    --radius-btn: 50px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* FIX MOBILE 1: Rimuove il rettangolo blu quando tocchi un link o bottone */
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    height: 100%;
+    /* Rimosso background nero qui per gestire meglio i livelli */
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    /* FIX SFONDO: Messo transparent per far vedere le forme sotto */
+    background-color: transparent; 
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    position: relative;
+
+    /* FIX MOBILE 2: Impedisce di selezionare il testo per sbaglio mentre scorri */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard */
+}
+
+/* IMPORTANTE: Riabilita la selezione dentro i campi Input e Textarea 
+   altrimenti l'utente non può scrivere nel form contatti o login! */
+input, textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+ul {
+    list-style: none;
+}/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    /* NOTE: Legacy variable names are kept, but now map to winter colors */
+    --color-dark-red: #0A2540;
+    --color-white: #FFF;
+    --color-pink-red: #1B6CA8;
+    --color-hot-pink: #00B4D8;
+    --color-black: #000;
+    --color-plum: #0F4C75;
+    
+    --bg-main: var(--color-black);
+    --text-main: var(--color-white);
+    
+    --primary-gradient: linear-gradient(135deg, var(--color-dark-red), var(--color-pink-red));
+    --accent-gradient: linear-gradient(135deg, var(--color-pink-red), var(--color-hot-pink));
+    
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(20px);
+    
+    --radius-lg: 30px;
+    --radius-md: 20px;
+    --radius-btn: 50px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* FIX MOBILE 1: Rimuove il rettangolo blu quando tocchi un link o bottone */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================
+   FIX SFONDO MOBILE (WHITE FLASH)
+   ========================================= */
+
+html {
+    height: 100%;
+    /* FONDAMENTALE: Imposta il colore della "tela" del browser su nero.
+       Così quando la barra degli indirizzi si muove, sotto non vedrai mai il bianco. */
+    background-color: var(--color-black); 
+    
+    /* Blocca il rimbalzo elastico che spesso mostra lo sfondo sotto */
+    overscroll-behavior: none;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    
+    /* Il body resta trasparente per permettere di vedere le forme (.bg-shapes) */
+    background-color: transparent; 
+    
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+    
+    /* Usa min-height 100vh per coprire sempre tutto lo schermo */
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    position: relative;
+
+    /* Le regole anti-selezione che abbiamo messo prima */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* IMPORTANTE: Riabilita la selezione dentro i campi Input e Textarea 
+   altrimenti l'utente non può scrivere nel form contatti o login! */
+input, textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+ul {
+    list-style: none;
+}

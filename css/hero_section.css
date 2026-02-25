@@ -1,0 +1,165 @@
+/* =========================================
+   5. HERO SECTION
+   ========================================= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 60px;
+}
+
+.hero-content {
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-left-col {
+    flex: 1;
+    max-width: 700px;
+}
+
+.hero-text {
+    text-align: left;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--color-hot-pink);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.main-title {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.location-info {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: .9;
+}
+
+/* Sticker Logo */
+.sticker-logo {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    left: auto;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #FFF;
+    background-color: #000;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: rotate(0deg);
+    z-index: 20;
+    transition: all 0.4s ease;
+}
+
+.sticker-logo:hover {
+    transform: scale(1.1) rotate(10deg);
+    border-color: var(--color-hot-pink);
+    cursor: pointer;
+}
+
+/* Countdown */
+.countdown-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    justify-content: flex-start;
+}
+
+.countdown-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-pink-red);
+    width: 90px;
+    height: 90px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.countdown-item span {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+
+.countdown-item label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    color: var(--color-hot-pink);
+    margin-top: 5px;
+}
+
+.cta-group {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.hero-right-col {
+    flex: 0 0 auto;
+}
+
+.event-date-box {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    padding: 30px 40px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--color-hot-pink);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.animate-pulse {
+    animation: softGlow 4s infinite alternate ease-in-out;
+}
+
+@keyframes softGlow {
+    0% {
+        border-color: rgba(0, 180, 216, 0.4);
+        box-shadow: 0 0 15px rgba(0, 180, 216, 0.05);
+        transform: scale(1);
+    }
+
+    100% {
+        border-color: rgba(0, 180, 216, 0.8);
+        box-shadow: 0 0 25px rgba(0, 180, 216, 0.2);
+        transform: scale(1.01);
+    }
+}
+
+.date-days {
+    display: block;
+    font-size: 5rem;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.date-month {
+    display: block;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 10px;
+    color: var(--color-white);
+}
