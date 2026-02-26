@@ -51,11 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 window.showTab = (tabId) => {
     // A. Gestione Sezioni Principali
     const dashboardSection = document.getElementById('section-dashboard');
-    const timerSection = document.getElementById('section-timer');
-
-    // Mostra Dashboard, Nascondi Timer
     if (dashboardSection) dashboardSection.style.display = 'block';
-    if (timerSection) timerSection.style.display = 'none';
 
     // B. Gestione Bottoni Menu Laterale
     // Rimuove 'active' da TUTTI i bottoni
@@ -1274,29 +1270,6 @@ window.addEventListener('click', (e) => {
     // GESTIONE NAVIGAZIONE SCHEDE (Tabs)
     // ==========================================
 
-    window.showSection = (sectionId, btnClicked) => {
-        // A. Gestione Sezioni Principali
-        const dashboardSection = document.getElementById('section-dashboard');
-        const timerSection = document.getElementById('section-timer');
-
-        if (sectionId === 'timer') {
-            // Nascondi Dashboard, Mostra Timer
-            if (dashboardSection) dashboardSection.style.display = 'none';
-            if (timerSection) timerSection.style.display = 'block';
-        }
-        // (Se in futuro aggiungi altre sezioni, metti qui gli else if)
-
-        // B. Gestione Bottoni Menu Laterale
-        // Rimuove 'active' da TUTTI i bottoni (compresi quelli delle tab dashboard)
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
-        // Aggiunge 'active' SOLO al bottone del Timer
-        if (btnClicked) {
-            btnClicked.classList.add('active');
-        }
-    };
-
-    // ... (Lascia qui sotto il codice del Timer saveTimerSettings e loadTimerDate che ti ho dato prima)
 });
 // --- GESTIONE TIMER ---
 
