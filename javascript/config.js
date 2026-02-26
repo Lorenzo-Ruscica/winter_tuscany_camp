@@ -3,7 +3,7 @@
 // DESCRIZIONE: Configurazione Supabase, Navbar, Protezione Pagine, Modali Globali
 // ============================================================
 
-const SUPABASE_URL = 'https://qdzktcgtxowsmrdfxegksupabase.co'; 
+const SUPABASE_URL = 'https://qdzktcgtxowsmrdfxegk.supabase.co'; 
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkemt0Y2d0eG93c21yZGZ4ZWdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDg5NDUsImV4cCI6MjA4NzYyNDk0NX0.ZkBGhsmNIZpfTgfWOV2wYKzAZq6URnOTGPf_Htay4Mk';
 
 // 1. Inizializzazione Supabase
