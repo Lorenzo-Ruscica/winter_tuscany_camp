@@ -3,9 +3,8 @@
 // DESCRIZIONE: Configurazione Supabase, Navbar, Protezione Pagine, Modali Globali
 // ============================================================
 
-// ⚠️ INSERISCI QUI I TUOI DATI VERI
-const SUPABASE_URL = 'https://gehqxdzlqcfxmhlaseeb.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdlaHF4ZHpscWNmeG1obGFzZWViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1MTUyMzgsImV4cCI6MjA4NTA5MTIzOH0.qKfxPMOFakbCuOSmFkPAlR6LovVRT-IO2cRk5bR3tUY';
+const SUPABASE_URL = 'https://qdzktcgtxowsmrdfxegksupabase.co'; 
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkemt0Y2d0eG93c21yZGZ4ZWdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDg5NDUsImV4cCI6MjA4NzYyNDk0NX0.ZkBGhsmNIZpfTgfWOV2wYKzAZq6URnOTGPf_Htay4Mk';
 
 // 1. Inizializzazione Supabase
 if (window.supabase && window.supabase.createClient) {
