@@ -1,4 +1,4 @@
-// Visual Editor Script
+
 let siteTexts = window.__dynamicSiteTexts || {};
 let activeElement = null;
 
@@ -118,6 +118,12 @@ const validTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'A', 'LI', '
 
 document.addEventListener('mouseover', (e) => {
     if (editorUI.contains(e.target)) return;
+
+    
+    if (e.target.closest('.event-date-box') || e.target.closest('.countdown-wrapper') || e.target.id === 'home-date-days' || e.target.id === 'home-date-month') {
+        return;
+    }
+
     if (validTags.includes(e.target.tagName)) {
         if (e.target.tagName === 'DIV' && e.target.children.length > 2) return;
         e.target.classList.add('ve-hover');
@@ -132,6 +138,12 @@ document.addEventListener('mouseout', (e) => {
 
 document.addEventListener('click', (e) => {
     if (editorUI.contains(e.target)) return;
+
+    
+    if (e.target.closest('.event-date-box') || e.target.closest('.countdown-wrapper') || e.target.id === 'home-date-days' || e.target.id === 'home-date-month') {
+        return;
+    }
+
     if (validTags.includes(e.target.tagName)) {
         if (e.target.tagName === 'DIV' && e.target.children.length > 2) return;
 

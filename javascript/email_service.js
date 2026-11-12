@@ -1,25 +1,24 @@
-// ============================================================
-// FILE: js/email_service.js
-// DESCRIZIONE: Gestisce SOLO l'invio delle email
-// ============================================================
 
-(function() {
-    // 1. Inizializza EmailJS immediatamente
+
+
+
+
+(function () {
+    
     if (typeof emailjs !== 'undefined') {
-        emailjs.init("HvNxuhIR0mdVRUIhR"); // La tua Public Key
-        console.log("✅ Email Service Pronto");
+        emailjs.init("HvNxuhIR0mdVRUIhR"); 
     } else {
-        console.error("❌ Errore: Libreria EmailJS non caricata nell'HTML");
+        
     }
 
-    // 2. Crea una funzione globale utilizzabile dagli altri file
-    window.sendEntryEmail = async function(data) {
-        console.log("📧 Tentativo invio email...", data);
+    
+    window.sendEntryEmail = async function (data) {
+        
 
-        const SERVICE_ID = "service_fik9j1g"; 
-        const TEMPLATE_ID = "template_2je1tdk"; 
+        const SERVICE_ID = "service_fik9j1g";
+        const TEMPLATE_ID = "template_2je1tdk";
 
-        // Prepara i parametri (Gestione dei campi vuoti inclusa)
+        
         const templateParams = {
             to_email: data.user_email,
             full_name: data.full_name,
@@ -43,14 +42,14 @@
         try {
             if (typeof emailjs !== 'undefined') {
                 const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                console.log("✅ Email inviata con successo!", response.status, response.text);
+                
                 return true;
             } else {
-                console.warn("⚠️ EmailJS non è definito, email non inviata.");
+                
                 return false;
             }
         } catch (error) {
-            console.error("❌ Errore invio Email:", error);
+            
             return false;
         }
     };

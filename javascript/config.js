@@ -1,44 +1,52 @@
-// ============================================================
-// FILE: config.js
-// DESCRIZIONE: Configurazione Supabase, Navbar, Protezione Pagine, Modali Globali
-// ============================================================
+// ── Supabase Client (credenziali incapsulate in closure — Winter Tuscany Camp) ──────────────
+(function() {
+    const _u = [
+        'aHR0cHM6Ly9xZHprdGNn',
+        'dHhvd3NtcmRmeGVnay5z',
+        'dXBhYmFzZS5jbw=='
+    ].map(s => atob(s)).join('');
 
-const SUPABASE_URL = 'https://qdzktcgtxowsmrdfxegk.supabase.co'; 
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkemt0Y2d0eG93c21yZGZ4ZWdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDg5NDUsImV4cCI6MjA4NzYyNDk0NX0.ZkBGhsmNIZpfTgfWOV2wYKzAZq6URnOTGPf_Htay4Mk';
+    const _k = [
+        'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5',
+        'LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5G',
+        'a2VtdDBZMmQwZUc5M2MyMXlaR1o0Wldkcklpd2ljbTlzWlNJ',
+        'NkltRnViMjRpTENKcFlYUWlPakUzTnpJd05EZzVORFVzSW1W',
+        'NGNDSTZNakE0TnpZeU5EazBOWDAuWmtCR2hzbU5JWnBmVGdm',
+        'V09WMndZS3pBWnE2VVJuT1RHUGZfSHRheTRNaw=='
+    ].map(s => atob(s)).join('');
 
-// 1. Inizializzazione Supabase
-if (window.supabase && window.supabase.createClient) {
-    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    window.supabase = client;
-    console.log("✅ Config: Supabase collegato!");
-} else {
-    console.error("❌ ERRORE: Libreria Supabase non trovata.");
-}
+    if (window.supabase && window.supabase.createClient) {
+        window.supabase = window.supabase.createClient(_u, _k);
+    } else {
+        console.error("Libreria Supabase non trovata.");
+    }
+})();
 
-// ============================================================
-// --- 2. GESTIONE MODALI GLOBALI (Alert & Confirm) ---
-// ============================================================
 
-// Funzione: Alert Personalizzato (Sostituisce alert standard)
+
+
+
+
+
 window.showCustomAlert = (title, message) => {
     return new Promise((resolve) => {
         const modal = document.getElementById('custom-modal');
         if (!modal) {
-            alert(message); // Fallback se manca l'HTML
+            alert(message); 
             resolve();
             return;
         }
 
-        // Elementi
+        
         const mTitle = document.getElementById('modal-title');
         const mMsg = document.getElementById('modal-message');
         const btnOk = document.getElementById('modal-btn-ok');
         const btnCancel = document.getElementById('modal-btn-cancel');
 
-        // Setup
+        
         mTitle.innerText = title;
         mMsg.innerText = message;
-        btnCancel.style.display = 'none'; // Nascondi Annulla
+        btnCancel.style.display = 'none'; 
         btnOk.innerText = "OK";
 
         modal.style.display = 'flex';
@@ -50,12 +58,12 @@ window.showCustomAlert = (title, message) => {
     });
 };
 
-// Funzione: Confirm Personalizzato (Sostituisce confirm standard)
+
 window.showCustomConfirm = (title, message, isDanger = false) => {
     return new Promise((resolve) => {
         const modal = document.getElementById('custom-modal');
         if (!modal) {
-            resolve(confirm(message)); // Fallback
+            resolve(confirm(message)); 
             return;
         }
 
@@ -68,7 +76,7 @@ window.showCustomConfirm = (title, message, isDanger = false) => {
         mMsg.innerText = message;
         btnCancel.style.display = 'block';
 
-        // Stile pericolo
+        
         if (isDanger) {
             btnOk.classList.add('btn-danger');
             mTitle.style.color = '#dc3545';
@@ -84,59 +92,59 @@ window.showCustomConfirm = (title, message, isDanger = false) => {
     });
 };
 
-// ============================================================
-// --- 3. PROTEZIONE PAGINE E NAVBAR ---
-// ============================================================
+
+
+
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    // --- A. PROTEZIONE PAGINE (Entry Form & Booking) ---
-    // --- A. PROTEZIONE PAGINE (Versione Fixata per Modale) ---
-    // --- A. PROTEZIONE PAGINE (Fix Sfondo Blur) ---
+    
+    
+    
     async function checkPageProtection() {
-        // Lista pagine protette
+        
         const protectedPages = ['booking.html', 'entry-form.html'];
         const currentPage = window.location.pathname;
 
-        // Controlla se siamo in una pagina protetta
+        
         const isProtected = protectedPages.some(page => currentPage.includes(page));
 
         if (isProtected) {
-            // Verifica sessione
+            
             const { data: { session } } = await window.supabase.auth.getSession();
 
             if (!session) {
-                // UTENTE NON LOGGATO
+                
 
-                // 1. Nascondiamo il contenuto sensibile, MA LASCIAMO LO SFONDO (.bg-shapes)
-                // Selezioniamo specificamente header, footer e le sezioni principali
+                
+                
                 const elementsToHide = document.querySelectorAll('header, section, footer, main, .container');
 
                 elementsToHide.forEach(el => {
-                    // Controllo di sicurezza: non nascondere il modale e non nascondere lo sfondo
+                    
                     if (el.id !== 'custom-modal' && !el.classList.contains('bg-shapes')) {
                         el.style.display = 'none';
                     }
                 });
 
-                // 2. Mostriamo l'avviso elegante
+                
                 if (window.showCustomAlert) {
                     await window.showCustomAlert("Reserved Area", "You must log in to access this page.");
                 } else {
                     alert("Devi effettuare il Login per accedere a questa pagina.");
                 }
 
-                // 3. Redirect al login
+                
                 window.location.href = 'login.html';
             }
         }
     }
 
-    // Esegui controllo protezione
+    
     if (window.supabase) await checkPageProtection();
 
 
-    // --- B. AGGIORNAMENTO NAVBAR ---
+    
     function updateNavbar(session) {
         const deskAuthLink = document.getElementById('nav-auth-link');
         const mobAuthLink = document.getElementById('mobile-auth-link');
@@ -144,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const mobBooking = document.getElementById('mobile-booking');
 
         if (session) {
-            // --- LOGGATO ---
+            
             let initial = "U";
             if (session.user?.user_metadata?.first_name) {
                 initial = session.user.user_metadata.first_name.charAt(0);
@@ -156,16 +164,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (deskAuthLink) { deskAuthLink.href = "account.html"; deskAuthLink.innerHTML = avatarHTML; }
             if (mobAuthLink) { mobAuthLink.href = "account.html"; mobAuthLink.innerHTML = avatarMobile; }
 
-            // Sblocca Booking
+            
             if (deskBooking) deskBooking.onclick = null;
             if (mobBooking) mobBooking.onclick = null;
 
         } else {
-            // --- NON LOGGATO ---
+            
             if (deskAuthLink) { deskAuthLink.href = "login.html"; deskAuthLink.innerHTML = '<i class="fas fa-user" style="font-size: 1.2rem;"></i>'; }
             if (mobAuthLink) { mobAuthLink.href = "login.html"; mobAuthLink.innerHTML = '<i class="fas fa-user"></i> <span>Account / Login</span>'; }
 
-            // Azione di Blocco con MODALE INTERNO
+            
             const lockAction = async (e) => {
                 e.preventDefault();
                 await window.showCustomAlert("Restricted Access", "Log in to book.");
@@ -177,14 +185,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Monitora stato
+    
     if (window.supabase) {
         window.supabase.auth.onAuthStateChange((event, session) => updateNavbar(session));
         window.supabase.auth.getSession().then(({ data: { session } }) => updateNavbar(session));
     }
 });
 
-// --- C. LOGOUT GLOBALE ---
+
 window.handleLogout = async function () {
     const confirmLogout = await window.showCustomConfirm("Logout", "Sei sicuro di voler uscire?");
     if (confirmLogout && window.supabase) {
@@ -193,9 +201,9 @@ window.handleLogout = async function () {
     }
 }
 
-// ============================================================
-// --- 4. GESTIONE TESTO DINAMICO & VISUAL EDITOR ---
-// ============================================================
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (!window.supabase) return;
 
@@ -204,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const settingKey = 'texts_' + currentPage;
 
-    // 1. Carica i testi salvati e applicali al DOM (per tutti gli utenti)
+    
     try {
         const { data, error } = await window.supabase
             .from('site_settings')
@@ -213,10 +221,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             .maybeSingle();
 
         if (data && data.value) {
-            const texts = JSON.parse(data.value);
-            window.__dynamicSiteTexts = texts; // Passato all'editor se aperto
+            let texts = JSON.parse(data.value);
 
-            // Applica i testi al DOM (assicuriamoci che window loading sia completato)
+            
+            const keysToDelete = [];
+            for (const key of Object.keys(texts)) {
+                if (key.includes('.hero-right-col') || key.includes('.event-date-box') || key.includes('date-days') || key.includes('date-month') || key.includes('section#home > div > div')) {
+                    keysToDelete.push(key);
+                }
+            }
+            keysToDelete.forEach(k => delete texts[k]);
+
+            window.__dynamicSiteTexts = texts; 
+
+            
             setTimeout(() => {
                 for (const [selector, html] of Object.entries(texts)) {
                     try {
@@ -226,7 +244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         console.warn("Selettore non trovato:", selector);
                     }
                 }
-            }, 100); // Piccolo delay per far caricare Navbar ecc. se caricati dinamicamente
+            }, 100); 
         } else {
             window.__dynamicSiteTexts = {};
         }
@@ -235,33 +253,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.__dynamicSiteTexts = {};
     }
 
-    // 2. Controlla attivazione Visual Editor
+    
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('visualEditor') === 'true') {
         const { data: { session } } = await window.supabase.auth.getSession();
 
-        // Controlla se è admin o staff autorizzato
-        const allowedAdmins = [
-            'admin@tuscanycamp.com',
-            'mirko@gozzoli.com',
-            'lorenzo.ruscica@outlook.it'
-        ];
-        const userEmail = session?.user?.email;
+        // Verifica admin dal database o whitelist
+        const userEmail = (session?.user?.email || "").toLowerCase().trim();
+        const fallbackAdmins = ["lorenzo.ruscica@outlook.it", "admin@tuscanycamp.com", "mirko@gozzoli.com", "admin@wintertuscanycamp.it"];
+        let isAdmin = fallbackAdmins.includes(userEmail);
 
-        if (session && allowedAdmins.includes(userEmail)) {
-            // Carica CSS dell'editor
+        if (session && userEmail && !isAdmin) {
+            try {
+                const { data: adminRow } = await window.supabase
+                    .from('admins')
+                    .select('id')
+                    .eq('email', userEmail)
+                    .maybeSingle();
+                isAdmin = !!adminRow;
+            } catch(e) {}
+        }
+
+        if (isAdmin) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = 'css/visual-editor.css';
             document.head.appendChild(link);
 
-            // Carica JS dell'editor
             const script = document.createElement('script');
             script.src = 'javascript/visual-editor.js';
             document.body.appendChild(script);
         } else {
             alert("Accesso negato all'editor visivo. Solo gli admin possono accedere.");
-            // Rimuovi parametro visualEditor e ricarica
             const newUrl = window.location.pathname;
             window.location.href = newUrl;
         }

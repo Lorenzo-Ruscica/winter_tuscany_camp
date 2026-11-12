@@ -1,6 +1,6 @@
-/* =========================================
-   4. HEADER & NAV
-   ========================================= */
+
+
+
 header {
     position: fixed;
     top: 40px;
@@ -86,7 +86,7 @@ header.scrolled .nav-links a {
     width: 100%;
 }
 
-/* Media Query Header Laptop */
+ 
 @media (min-width: 993px) and (max-width: 1300px) {
     header {
         width: 98%;
@@ -108,7 +108,7 @@ header.scrolled .nav-links a {
     }
 }
 
-/* Media Query Header Mobile */
+ 
 @media (max-width: 992px) {
     .nav-links {
         display: none;
@@ -133,7 +133,7 @@ header.scrolled .nav-links a {
     }
 }
 
-/* Hamburger & Mobile Menu */
+ 
 .hamburger {
     display: none;
     flex-direction: column;

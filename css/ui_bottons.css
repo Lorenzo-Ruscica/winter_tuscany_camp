@@ -1,6 +1,6 @@
-/* =========================================
-   3. GENERAL UI & BUTTONS
-   ========================================= */
+
+
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -32,30 +32,24 @@
     background: var(--accent-gradient);
 }
 
-/* Stile base per il bottone Cancel/Outline */
+ 
 .btn-outline {
-    background: transparent;
-    /* Sfondo trasparente */
+    background: transparent;  
     border: 2px solid var(--color-hot-pink);
-    color: var(--color-white);
-    /* Testo bianco */
-    margin-left: 10px;
-    /* Spazio tra i bottoni */
+    color: var(--color-white);  
+    margin-left: 10px;  
     transition: all 0.3s ease;
 }
 
-/* Quando passi sopra col mouse (Hover) */
+ 
 .btn-outline:hover {
-    background: var(--color-hot-pink);
-    /* Sfondo diventa rosa */
-    color: var(--color-white);
-    /* Testo rimane bianco */
-    box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
-    /* Effetto glow */
+    background: var(--color-hot-pink);  
+    color: var(--color-white);  
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);  
     border-color: var(--color-hot-pink);
 }
 
-/* Bottone Login nell'header (se usato) */
+ 
 .btn-login {
     border: 1px solid var(--color-hot-pink);
     color: var(--color-white);
@@ -74,8 +68,7 @@
     display: block;
     width: 100%;
     margin-top: 20px;
-    padding: 15px;
-    /* Uniformato */
+    padding: 15px;  
     border: 1px solid var(--color-hot-pink);
     border-radius: 50px;
     color: var(--color-white);
@@ -95,6 +88,5 @@
 .gradient-text {
     background: var(--accent-gradient);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
 }

@@ -1,8 +1,8 @@
-/* =========================================
-   6. SEZIONI: Location, Info, Program, etc.
-   ========================================= */
 
-/* Location */
+
+
+
+ 
 .location-section {
     padding: 100px 0;
     background: transparent;
@@ -50,7 +50,7 @@
     transform: scale(1.02);
 }
 
-/* Info Section (Cards) */
+ 
 .info-section {
     padding: 80px 0;
 }
@@ -165,9 +165,9 @@
     border-color: var(--color-hot-pink);
 }
 
-/* =========================================
-   CTA REGISTRATION SECTION
-   ========================================= */
+
+
+
 .cta-section {
     padding: 60px 0;
     position: relative;
@@ -177,15 +177,12 @@
 .cta-box {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--color-hot-pink);
-    border-radius: 30px;
-    /* Un po' meno arrotondato */
-    padding: 40px 30px;
-    /* Meno spazio interno (Era 60px 40px) */
+    border-radius: 30px;  
+    padding: 40px 30px;   
     text-align: center;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 40px rgba(0, 180, 216, 0.15);
-    max-width: 700px;
-    /* Più stretto (Era 900px) */
+    max-width: 700px;     
     margin: 0 auto;
     transition: transform 0.4s ease;
 }
@@ -219,17 +216,15 @@
     letter-spacing: 2px;
 }
 
-/* Adattamento Mobile */
+ 
 @media (max-width: 768px) {
     .cta-box {
         padding: 40px 20px;
         width: 95%;
     }
-
     .cta-box h2 {
         font-size: 2.5rem;
     }
-
     .cta-box p {
         font-size: 1rem;
     }

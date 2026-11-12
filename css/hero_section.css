@@ -1,6 +1,6 @@
-/* =========================================
-   5. HERO SECTION
-   ========================================= */
+
+
+
 .hero {
     min-height: 100vh;
     display: flex;
@@ -51,7 +51,7 @@
     opacity: .9;
 }
 
-/* Sticker Logo */
+ 
 .sticker-logo {
     position: absolute;
     top: -50px;
@@ -75,7 +75,7 @@
     cursor: pointer;
 }
 
-/* Countdown */
+ 
 .countdown-wrapper {
     display: flex;
     gap: 20px;
@@ -140,7 +140,6 @@
         box-shadow: 0 0 15px rgba(0, 180, 216, 0.05);
         transform: scale(1);
     }
-
     100% {
         border-color: rgba(0, 180, 216, 0.8);
         box-shadow: 0 0 25px rgba(0, 180, 216, 0.2);

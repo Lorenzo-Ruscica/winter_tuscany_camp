@@ -1,8 +1,8 @@
-/* =========================================
-   8. SPECIFIC PAGES (Program, Teachers, Gallery, etc.)
-   ========================================= */
 
-/* Program Page */
+
+
+
+ 
 .page-hero {
     padding: 160px 0 40px;
     text-align: center;
@@ -103,7 +103,7 @@
     box-shadow: 0 0 30px rgba(0, 180, 216, .6);
 }
 
-/* Guest Teachers */
+ 
 .organizer-section {
     padding: 0 0 60px;
     text-align: center;
@@ -219,7 +219,7 @@
     color: rgba(0, 180, 216, .7);
 }
 
-/* Packages Page */
+ 
 .packages-section {
     padding-bottom: 100px;
 }
@@ -314,45 +314,16 @@
     color: #666;
 }
 
-.package-card.basic {
-    border-top: 4px solid #d63384;
-}
-
-.package-card.basic h3 {
-    color: #d63384;
-}
-
-.package-card.bronze {
-    border-top: 4px solid #cd7f32;
-}
-
-.package-card.bronze h3 {
-    color: #cd7f32;
-}
-
-.package-card.silver {
-    border-top: 4px solid silver;
-}
-
-.package-card.silver h3 {
-    color: silver;
-}
-
-.package-card.gold {
-    border-top: 4px solid gold;
-}
-
-.package-card.gold h3 {
-    color: gold;
-}
-
-.package-card.platinum {
-    border-top: 4px solid #e5e4e2;
-}
-
-.package-card.platinum h3 {
-    color: #e5e4e2;
-}
+.package-card.basic { border-top: 4px solid #00B4D8; }
+.package-card.basic h3 { color: #00B4D8; }
+.package-card.bronze { border-top: 4px solid #cd7f32; }
+.package-card.bronze h3 { color: #cd7f32; }
+.package-card.silver { border-top: 4px solid silver; }
+.package-card.silver h3 { color: silver; }
+.package-card.gold { border-top: 4px solid gold; }
+.package-card.gold h3 { color: gold; }
+.package-card.platinum { border-top: 4px solid #e5e4e2; }
+.package-card.platinum h3 { color: #e5e4e2; }
 
 .popular-tag {
     position: absolute;
@@ -438,7 +409,7 @@
     color: rgba(255, 255, 255, .9);
 }
 
-/* Gallery & Lightbox */
+ 
 .gallery-section {
     padding-bottom: 100px;
 }
@@ -528,15 +499,8 @@
 }
 
 @keyframes zoomIn {
-    from {
-        transform: scale(.8);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 .close-lightbox {

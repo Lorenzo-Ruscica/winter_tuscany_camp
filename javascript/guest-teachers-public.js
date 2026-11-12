@@ -1,4 +1,4 @@
-// Carica la lista dei Guest Teachers da Supabase
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (!window.supabase) return;
 
@@ -29,18 +29,18 @@ function renderList(elementId, textContent) {
     const list = document.getElementById(elementId);
     if (!list) return;
 
-    // Se il contenuto è vuoto, non fare nulla (lascia il fallback o vuoto)
+    
     if (!textContent.trim()) return;
 
     const lines = textContent.split('\n').filter(line => line.trim() !== '');
 
-    list.innerHTML = ''; // Pulisce la lista hardcoded
+    list.innerHTML = ''; 
 
     lines.forEach(line => {
         let cleanLine = line.trim();
 
-        // Esempio: "Valdis Skutans (LAT)" -> "Valdis Skutans <span class="country">(LAT)</span>"
-        // Cerca parentesi con testo dentro
+        
+        
         cleanLine = cleanLine.replace(/(\([A-Za-z0-9]+\))/g, '<span class="country">$1</span>');
 
         const li = document.createElement('li');

@@ -1,9 +1,9 @@
-// ============================================================
-// FILE: js/entry_form.js
-// DESCRIZIONE: UI Logic + Bank Transfer (No Stripe)
-// ============================================================
 
-// --- FUNZIONE GLOBALE WIZARD (STEP 1) ---
+
+
+
+
+
 window.selectRegistrationStep = function (type) {
     const step1 = document.getElementById('step-1-selection');
     const entryForm = document.getElementById('entryForm');
@@ -20,14 +20,14 @@ window.selectRegistrationStep = function (type) {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    // --- 0. COLLEGAMENTI ED EVENTI ---
+    
     document.addEventListener('registrationTypeSelected', (e) => {
         updateFormVisibility(e.detail);
         calculateTotal();
         document.getElementById('entryForm').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // --- 1. PROTEZIONE LOGIN ---
+    
     await checkAuthProtection();
 
     async function checkAuthProtection() {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 2. GESTIONE NOTTI EXTRA ---
+    
     const nightButtons = document.querySelectorAll('.btn-night');
     const hiddenNightsInput = document.getElementById('extraNights');
     const hiddenTypeInput = document.getElementById('registrationType');
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // --- 3. VISIBILITÀ CAMPI ---
+    
     function updateFormVisibility(type) {
         const manSection = document.getElementById('man-fields');
         const womanSection = document.getElementById('woman-fields');
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- RIFERIMENTI DOM ---
+    
     const entryForm = document.getElementById('entryForm');
     const paymentModal = document.getElementById('paymentModal');
     const paymentForm = document.getElementById('paymentForm');
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const closeSuccessBtn = document.getElementById('btn-close-success');
     const radioPackages = document.querySelectorAll('input[name="package"]');
 
-    // Summary
+    
     const summaryPkgName = document.getElementById('summary-pkg-name');
     const summaryPkgPrice = document.getElementById('summary-pkg-price');
     const summaryNightCount = document.getElementById('summary-night-count');
@@ -126,32 +126,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     const NIGHT_PRICE = 70;
     let currentGrandTotal = 0;
     let existingRecordId = null;
-    let isRegistrationComplete = false; // Sostituisce isPaid per la logica UI
+    let isRegistrationComplete = false; 
 
-    // --- 4. CHECK UTENTE ESISTENTE ---
-    // --- 4. CHECK UTENTE ESISTENTE & GLOBAL ADMIN CHECK ---
-    // --- 4. CHECK UTENTE ESISTENTE & GLOBAL ADMIN CHECK ---
+    
+    
+    
     async function checkExistingRegistration() {
         const { data: { session } } = await window.supabase.auth.getSession();
         if (!session) return;
 
-        // Fetch Parallelo: Registrazione Utente + Impostazione Admin
+        
         const [{ data: reg }, { data: setting }] = await Promise.all([
             window.supabase.from('registrations').select('*').eq('user_id', session.user.id).maybeSingle(),
-            // Nota: Se la key non esiste, setting sarà null (che va bene, si considera aperto)
+            
             window.supabase.from('site_settings').select('value').eq('key', 'entry_form').maybeSingle()
         ]);
 
         const isEntryDisabled = setting && (setting.value === false || setting.value === 'false');
 
         if (isEntryDisabled) {
-            // LOGICA CHIUSURA
+            
             const step1 = document.getElementById('step-1-selection');
             const entryForm = document.getElementById('entryForm');
             if (entryForm) entryForm.style.display = 'none';
 
             if (step1) {
-                // Costruiamo il messaggio base
+                
                 let html = `
                     <div style="text-align:center; padding:50px;">
                         <div style="width:80px; height:80px; background:rgba(231, 76, 60, 0.1); border-radius:50%; display:flex; justify-content:center; align-items:center; margin:0 auto 20px;">
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p style="color:#aaa;">The entry form is currently closed.</p>
                  `;
 
-                // Se l'utente ha già compilato, aggiungiamo il bottone "VEDI MA NON TOCCARE"
+                
                 if (reg) {
                     html += `
                         <button id="btn-view-readonly" class="btn btn-outline" style="margin-top:20px; border-color:var(--color-hot-pink); color:white;">
@@ -178,23 +178,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 step1.innerHTML = html;
                 step1.style.display = 'block';
 
-                // Attach Event Listener dopo che l'HTML è stato inserito
+                
                 setTimeout(() => {
                     const btnView = document.getElementById('btn-view-readonly');
                     if (btnView) {
                         btnView.onclick = () => {
-                            // Carica i dati in modalità READ-ONLY (Flag true)
+                            
                             loadUserData(reg, true);
                         };
                     }
                 }, 0);
             }
-            return; // Stop qui, non carichiamo il form normale automaticamente
+            return; 
         }
 
-        // Se APERTO:
+        
         if (reg) {
-            loadUserData(reg, false); // false = Modificabile (se pagato diventa "Solo Update")
+            loadUserData(reg, false); 
         }
     }
 
@@ -204,10 +204,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         existingRecordId = data.id;
 
-        // Se lo stato è 'paid' OPPURE 'pending' (bonifico fatto), blocchiamo come completato
+        
         isRegistrationComplete = (data.payment_status === 'paid' || data.payment_status === 'pending');
 
-        // Rileva Tipo
+        
         let detectedType = 'couple';
         if (!data.woman_name && data.man_name) detectedType = 'man';
         else if (!data.man_name && data.woman_name) detectedType = 'woman';
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (hiddenTypeInput) hiddenTypeInput.value = detectedType;
         updateFormVisibility(detectedType);
 
-        // Popola
+        
         setVal('manName', data.man_name); setVal('manSurname', data.man_surname);
         setVal('femaleName', data.woman_name); setVal('femaleSurname', data.woman_surname);
         setVal('country', data.country); setVal('teacherName', data.teacher);
@@ -236,23 +236,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.classList.remove('active');
             if (parseInt(btn.dataset.value) == savedNights) btn.classList.add('active');
 
-            // Disabilita se paid o se readonly
+            
             if (isRegistrationComplete || isReadOnly) {
                 btn.disabled = true;
                 btn.style.opacity = "0.5";
             }
         });
 
-        // SE LA REGISTRAZIONE È COMPLETA (MODALITÀ MODIFICA)
+        
         if (isRegistrationComplete) {
             applyCompleteVisuals();
             const changeBox = document.getElementById('change-type-box');
             if (changeBox) changeBox.style.display = 'none';
         }
 
-        // --- MODALITA' READ-ONLY (CHIUSURA ADMIN) ---
+        
         if (isReadOnly) {
-            // Disabilita tutto
+            
             const form = document.getElementById('entryForm');
             const elements = form.querySelectorAll('input, select, textarea, button');
             elements.forEach(el => {
@@ -261,12 +261,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 el.style.cursor = 'not-allowed';
             });
 
-            // Nascondi tasti submit e cambio tipo
+            
             if (mainBtn) mainBtn.style.display = 'none';
             const changeBox = document.getElementById('change-type-box');
             if (changeBox) changeBox.style.display = 'none';
 
-            // Aggiungi un banner se non c'è già
+            
             if (!document.getElementById('readonly-banner')) {
                 const banner = document.createElement('div');
                 banner.id = 'readonly-banner';
@@ -286,13 +286,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const totalLabel = document.querySelector('.line.total span:first-child');
             if (totalLabel) totalLabel.innerText = "CONFIRMED";
 
-            // Disabilita pacchetti
+            
             radioPackages.forEach(r => {
                 r.disabled = true;
                 r.parentElement.style.opacity = "0.5";
             });
 
-            // Cambia il tasto in "UPDATE"
+            
             if (summaryCard.contains(mainBtn)) {
                 mainBtn.classList.add('update-btn-style');
                 mainBtn.innerText = "UPDATE INFORMATION";
@@ -300,11 +300,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // 2. MOSTRA IL NUOVO BOX BANCARIO
+        
         const bankBox = document.getElementById('bank-details-box');
         if (bankBox) {
             bankBox.style.display = 'block';
-            // Animazione carina di entrata
+            
             bankBox.classList.add('fade-in-up');
         }
     }
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (el && val !== null && val !== undefined) el.value = val;
     }
 
-    // --- 5. CALCOLI ---
+    
     function calculateTotal() {
         const selectedRadio = document.querySelector('input[name="package"]:checked');
         if (selectedRadio) {
@@ -333,37 +333,37 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         currentGrandTotal = subTotal * multiplier;
 
-        // UI Update
+        
         if (summaryPkgName) summaryPkgName.innerText = currentPkgName.toUpperCase() + (multiplier === 2 ? " (x2)" : "");
         if (summaryPkgPrice) summaryPkgPrice.innerText = "€ " + (currentBasePrice * multiplier);
         if (summaryNightCount) summaryNightCount.innerText = nights;
         if (summaryNightTotal) summaryNightTotal.innerText = "€ " + (nightsCost * multiplier);
         if (summaryTotal) summaryTotal.innerText = "€ " + currentGrandTotal;
 
-        // Modal Updates
+        
         if (modalTotal) modalTotal.innerText = "€ " + currentGrandTotal;
         if (modalPkgName) modalPkgName.innerText = currentPkgName.toUpperCase() + (multiplier === 2 ? " (Couple)" : " (Single)");
     }
 
     radioPackages.forEach(radio => radio.addEventListener('change', calculateTotal));
 
-    // --- 6. SUBMIT PRINCIPALE ---
+    
     if (entryForm) {
         entryForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!entryForm.checkValidity()) { entryForm.reportValidity(); return; }
 
-            // Se è già completo, è solo un UPDATE
+            
             if (isRegistrationComplete) {
                 await updateOnlyInfo();
             } else {
-                // Se è nuovo, apri modale Bonifico
+                
                 if (paymentModal) paymentModal.style.display = 'flex';
             }
         });
     }
 
-    // --- 7. CONFERMA BONIFICO (Salva e entra in modalità modifica) ---
+    
     if (paymentForm) {
         paymentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -377,16 +377,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const formData = getFormData();
 
-                // Salviamo come 'pending' nel DB perché è un bonifico
-                // Ma per l'utente sembrerà completato
+                
+                
                 const supabaseData = {
                     ...formData,
                     user_id: userId,
-                    payment_status: 'pending', // Pending verifica admin
+                    payment_status: 'pending', 
                     created_at: new Date()
                 };
 
-                // 1. Inserisci o Aggiorna nel DB
+                
                 let result;
                 if (existingRecordId) {
                     result = await window.supabase.from('registrations').update(supabaseData).eq('id', existingRecordId).select();
@@ -396,21 +396,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (result.error) throw result.error;
 
-                // Aggiorna ID se era nuovo inserimento
+                
                 if (result.data && result.data.length > 0) {
                     existingRecordId = result.data[0].id;
                 }
 
-                // 2. Invia Email
+                
                 if (window.sendEntryEmail) {
                     await window.sendEntryEmail(supabaseData);
                 }
 
-                // 3. UI Successo
+                
                 paymentModal.style.display = 'none';
                 showSuccess("Registration Confirmed!", "Thank you. We have received your data.");
 
-                // 4. ATTIVA MODALITÀ MODIFICA
+                
                 isRegistrationComplete = true;
                 applyCompleteVisuals();
                 const changeBox = document.getElementById('change-type-box');
@@ -426,12 +426,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Funzione Update Solo Info (Modalità Modifica)
+    
     async function updateOnlyInfo() {
         mainBtn.disabled = true; mainBtn.innerText = "Updating...";
         try {
             const updates = getFormData();
-            // Manteniamo lo stato pagamento esistente, aggiorniamo solo info
+            
             const { error } = await window.supabase.from('registrations').update(updates).eq('id', existingRecordId);
             if (error) throw error;
             showSuccess("Success!", "Information updated successfully.");
@@ -439,8 +439,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         finally { mainBtn.disabled = false; mainBtn.innerText = "UPDATE INFORMATION"; }
     }
 
-    // --- HELPER ---
-    // --- HELPER: getFormData ---
+    
+    
     function getFormData() {
         const type = hiddenTypeInput.value;
         let manN = getValue('manName');
@@ -464,9 +464,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             age_group: getValue('ageGroup'),
             phone: getValue('phone'),
 
-            // --- CORREZIONE QUI SOTTO ---
-            // Ho rimosso "email: getValue('email')," che causava l'errore.
-            // Lasciamo solo user_email che è il nome giusto della colonna nel DB.
+            
+            
+            
             user_email: getValue('email'),
 
             package: currentPkgName,
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         successModal.style.display = 'flex';
     }
 
-    // UI Listeners
+    
     if (closeModalBtn) closeModalBtn.addEventListener('click', () => { paymentModal.style.display = 'none'; });
     if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', () => { successModal.style.display = 'none'; });
     window.addEventListener('click', (e) => {
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (e.target === successModal) successModal.style.display = 'none';
     });
 
-    // Back Button
+    
     const backBtn = document.getElementById('btnBackToStep1');
     if (backBtn) {
         backBtn.addEventListener('click', () => {
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Init
+    
     calculateTotal();
     checkExistingRegistration();
 });
