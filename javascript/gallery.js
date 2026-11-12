@@ -8,13 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const elDays = document.getElementById('days');
 
-    
     if (elDays) {
+        let targetDateString = localStorage.getItem('wtc_countdown_end') || "2027-01-16T09:00:00";
 
-        
-        let targetDateString = "2026-05-23T09:00:00";
-
-        
         if (window.supabase) {
             try {
                 const { data, error } = await window.supabase
@@ -25,58 +21,80 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (data && data.value) {
                     targetDateString = data.value;
+                    localStorage.setItem('wtc_countdown_end', data.value);
                 }
             } catch (err) {
                 console.warn("⚠️ Errore lettura Timer (Uso default):", err);
             }
         }
 
-        
-        const eventDate = new Date(targetDateString).getTime();
+        const parseTargetDate = (str) => {
+            if (!str) return NaN;
+            let t = new Date(str).getTime();
+            if (!isNaN(t)) return t;
+            // Fallback parsing per formati YYYY-MM-DDTHH:mm
+            const parts = str.split(/[-T: ]/);
+            if (parts.length >= 3) {
+                return new Date(
+                    parseInt(parts[0], 10),
+                    parseInt(parts[1], 10) - 1,
+                    parseInt(parts[2], 10),
+                    parseInt(parts[3] || "0", 10),
+                    parseInt(parts[4] || "0", 10),
+                    parseInt(parts[5] || "0", 10)
+                ).getTime();
+            }
+            return NaN;
+        };
+
+        const eventDate = parseTargetDate(targetDateString);
         let timer;
 
         const updateTimer = () => {
-            const now = new Date().getTime();
+            const now = Date.now();
             const diff = eventDate - now;
 
             const currDays = document.getElementById('days');
             const currHours = document.getElementById('hours');
             const currMinutes = document.getElementById('minutes');
             const currSeconds = document.getElementById('seconds');
-            const countdownContainer = document.getElementById('countdown');
 
-            
-            if (diff < 0) {
+            if (isNaN(diff) || diff <= 0) {
                 if (timer) clearInterval(timer);
-                if (countdownContainer) {
-                    countdownContainer.innerHTML = "<h3 style='color:var(--color-hot-pink); text-align:center; margin-top:10px;'>EVENT STARTED!</h3>";
-                }
+                if (currDays) currDays.innerText = "00";
+                if (currHours) currHours.innerText = "00";
+                if (currMinutes) currMinutes.innerText = "00";
+                if (currSeconds) currSeconds.innerText = "00";
                 return;
             }
 
-            
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            
-            if (currDays) currDays.innerText = d < 10 ? "0" + d : d;
-            if (currHours) currHours.innerText = h < 10 ? "0" + h : h;
-            if (currMinutes) currMinutes.innerText = m < 10 ? "0" + m : m;
-            if (currSeconds) currSeconds.innerText = s < 10 ? "0" + s : s;
+            if (currDays) currDays.innerText = d < 10 ? "0" + d : String(d);
+            if (currHours) currHours.innerText = h < 10 ? "0" + h : String(h);
+            if (currMinutes) currMinutes.innerText = m < 10 ? "0" + m : String(m);
+            if (currSeconds) currSeconds.innerText = s < 10 ? "0" + s : String(s);
         };
 
-        
         updateTimer();
         timer = setInterval(updateTimer, 1000);
     }
 
-    
-    
     if (document.getElementById('home-date-days') || document.getElementById('home-date-month')) {
-        let heroDaysText = "23 &bull; 24";
-        let heroMonthText = "MAY 2026";
+        let heroDaysText = "16 &bull; 17";
+        let heroMonthText = "JANUARY 2027";
+
+        const savedLocalHero = localStorage.getItem('wtc_hero_dates');
+        if (savedLocalHero) {
+            try {
+                const p = JSON.parse(savedLocalHero);
+                if (p.days) heroDaysText = p.days;
+                if (p.month) heroMonthText = p.month;
+            } catch(e) {}
+        }
 
         if (window.supabase) {
             try {
@@ -90,28 +108,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const parsed = JSON.parse(data.value);
                     if (parsed.days) heroDaysText = parsed.days;
                     if (parsed.month) heroMonthText = parsed.month;
+                    localStorage.setItem('wtc_hero_dates', data.value);
                 }
             } catch (err) {
                 console.warn("⚠️ Errore lettura Hero Dates:", err);
             }
         }
 
-        
         const applyHeroDates = () => {
             const elDays = document.getElementById('home-date-days');
             const elMonth = document.getElementById('home-date-month');
 
-            
             if (elDays && elDays.innerHTML !== heroDaysText) elDays.innerHTML = heroDaysText;
             if (elMonth && elMonth.innerHTML !== heroMonthText) elMonth.innerHTML = heroMonthText;
         };
 
-        
         applyHeroDates();
 
-        
         const heroInterval = setInterval(applyHeroDates, 200);
-        
         setTimeout(() => clearInterval(heroInterval), 5000);
     }
 

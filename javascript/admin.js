@@ -2530,41 +2530,62 @@ window.addEventListener('click', (e) => {
 });
 
 async function loadCurrentTimer() {
-    
-    const { data: timerData } = await window.supabase
-        .from('site_settings')
-        .select('value')
-        .eq('key', 'countdown_end')
-        .single();
+    try {
+        const { data: timerData } = await window.supabase
+            .from('site_settings')
+            .select('value')
+            .eq('key', 'countdown_end')
+            .maybeSingle();
 
-    if (timerData && document.getElementById('timer-date-input')) {
-        document.getElementById('timer-date-input').value = timerData.value;
+        const savedLocalTimer = localStorage.getItem('wtc_countdown_end');
+        const timerVal = (timerData && timerData.value) ? timerData.value : (savedLocalTimer || "2027-01-16T09:00");
+
+        if (document.getElementById('timer-date-input')) {
+            document.getElementById('timer-date-input').value = timerVal.slice(0, 16);
+        }
+    } catch (e) {
+        console.error("Errore caricamento countdown_end:", e);
     }
 
-    
-    const { data: heroData } = await window.supabase
-        .from('site_settings')
-        .select('value')
-        .eq('key', 'hero_dates')
-        .single();
+    try {
+        const { data: heroData } = await window.supabase
+            .from('site_settings')
+            .select('value')
+            .eq('key', 'hero_dates')
+            .maybeSingle();
 
-    if (heroData && heroData.value) {
-        try {
-            const parsed = JSON.parse(heroData.value);
-            if (document.getElementById('hero-date-days')) document.getElementById('hero-date-days').value = parsed.days || "23 &bull; 24";
-            if (document.getElementById('hero-date-month')) document.getElementById('hero-date-month').value = parsed.month || "MAY 2026";
-        } catch (e) { console.error("Errore parsing hero_dates", e); }
-    } else {
-        if (document.getElementById('hero-date-days')) document.getElementById('hero-date-days').value = "23 &bull; 24";
-        if (document.getElementById('hero-date-month')) document.getElementById('hero-date-month').value = "MAY 2026";
+        const savedLocalHero = localStorage.getItem('wtc_hero_dates');
+        const rawHero = (heroData && heroData.value) ? heroData.value : savedLocalHero;
+
+        if (rawHero) {
+            const parsed = JSON.parse(rawHero);
+            if (document.getElementById('hero-date-days')) document.getElementById('hero-date-days').value = parsed.days || "16 &bull; 17";
+            if (document.getElementById('hero-date-month')) document.getElementById('hero-date-month').value = parsed.month || "JANUARY 2027";
+        } else {
+            if (document.getElementById('hero-date-days')) document.getElementById('hero-date-days').value = "16 &bull; 17";
+            if (document.getElementById('hero-date-month')) document.getElementById('hero-date-month').value = "JANUARY 2027";
+        }
+    } catch (e) {
+        console.error("Errore parsing hero_dates", e);
     }
 }
-
 
 window.saveTimerDate = async () => {
     const newVal = document.getElementById('timer-date-input').value;
 
     if (!newVal) return alert("Seleziona una data valida.");
+
+    const targetMs = new Date(newVal).getTime();
+    const nowMs = Date.now();
+    if (isNaN(targetMs)) {
+        return alert("Formato data non valido.");
+    }
+    if (targetMs <= nowMs) {
+        const nowStr = new Date(nowMs).toLocaleString('it-IT');
+        if (!confirm(`Attenzione: la data selezionata è nel passato rispetto all'orologio del tuo dispositivo (${nowStr}). Il timer mostrerà 00. Vuoi salvarla comunque?`)) {
+            return;
+        }
+    }
 
     const btn = document.querySelector('button[onclick="saveTimerDate()"]');
     const oldHtml = btn.innerHTML;
@@ -2572,10 +2593,12 @@ window.saveTimerDate = async () => {
     btn.disabled = true;
 
     try {
+        // Salva anche in localStorage come fallback immediato
+        localStorage.setItem('wtc_countdown_end', newVal);
+
         const { error } = await window.supabase
             .from('site_settings')
-            .update({ value: newVal })
-            .eq('key', 'countdown_end');
+            .upsert({ key: 'countdown_end', value: newVal }, { onConflict: 'key' });
 
         if (error) throw error;
 
@@ -2603,6 +2626,8 @@ window.saveHeroDates = async () => {
     const jsonValue = JSON.stringify({ days, month });
 
     try {
+        localStorage.setItem('wtc_hero_dates', jsonValue);
+
         const { error } = await window.supabase
             .from('site_settings')
             .upsert({ key: 'hero_dates', value: jsonValue }, { onConflict: 'key' });
