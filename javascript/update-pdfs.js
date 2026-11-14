@@ -14,12 +14,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (progObj && progObj.value) {
             const btn = document.getElementById('link-pdf-program');
-            if (btn) btn.href = progObj.value;
+            if (btn) {
+                btn.href = progObj.value;
+                btn.target = '_blank';
+                btn.rel = 'noopener noreferrer';
+            }
         }
 
         if (packObj && packObj.value) {
             const btn = document.getElementById('link-pdf-packages');
-            if (btn) btn.href = packObj.value;
+            if (btn) {
+                btn.href = packObj.value;
+                btn.target = '_blank';
+                btn.rel = 'noopener noreferrer';
+            }
         }
 
     } catch (e) {

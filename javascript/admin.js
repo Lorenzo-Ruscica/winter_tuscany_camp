@@ -3137,7 +3137,7 @@ window.uploadPDF = async (type) => {
     }
 
     const file = fileInput.files[0];
-    if (file.type !== 'application/pdf') {
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
         alert("Il file deve essere un PDF.");
         return;
     }
@@ -3164,7 +3164,8 @@ window.uploadPDF = async (type) => {
             .from(bucketName)
             .upload(fileName, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: true,
+                contentType: 'application/pdf'
             });
 
         if (uploadError) {
@@ -3201,12 +3202,12 @@ window.uploadPDF = async (type) => {
         statusLabel.style.color = "red";
     } finally {
         btn.disabled = false;
-        btn.innerHTML = oldText; 
+        btn.innerHTML = oldBtnText;
         
         
 
-        if (type === 'program') btn.innerHTML = '<i class="fas fa-upload"></i> Carica & Aggiorna Programma';
-        else btn.innerHTML = '<i class="fas fa-upload"></i> Carica & Aggiorna Pacchetti';
+        if (type === 'program') btn.innerHTML = '<i class="fas fa-upload"></i> Carica programma';
+        else btn.innerHTML = '<i class="fas fa-upload"></i> Carica pacchetti';
     }
 };
 

@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS public.admins (
 INSERT INTO public.admins (email) VALUES
     ('admin@tuscanycamp.com'),
     ('mirko@gozzoli.com'),
-    ('lorenzo.ruscica@outlook.it')
+    ('lorenzo.ruscica@outlook.it'),
+    ('admin@wintertuscanycamp.it'),
+    ('ubaldocecamore@inwind.it')
 ON CONFLICT (email) DO NOTHING;
 
 -- ────────────────────────────────────────────────────────────
@@ -28,10 +30,11 @@ RETURNS boolean
 LANGUAGE sql
 SECURITY DEFINER
 STABLE
+SET search_path = public
 AS $$
     SELECT EXISTS (
         SELECT 1 FROM public.admins
-        WHERE email = (auth.jwt() ->> 'email')
+        WHERE lower(email) = lower(auth.jwt() ->> 'email')
     );
 $$;
 
@@ -139,7 +142,50 @@ CREATE POLICY "user_check_own_admin" ON public.admins
     FOR SELECT USING (email = (auth.jwt() ->> 'email'));
 
 -- ────────────────────────────────────────────────────────────
--- 10. PERMESSI FUNZIONE
+-- 10. PERMESSI FUNZIONE & KEEP ALIVE
 -- ────────────────────────────────────────────────────────────
 GRANT EXECUTE ON FUNCTION public.is_admin() TO anon;
 GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.keep_alive()
+RETURNS boolean
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+    SELECT true;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.keep_alive() TO anon;
+GRANT EXECUTE ON FUNCTION public.keep_alive() TO authenticated;
+
+-- ────────────────────────────────────────────────────────────
+-- 11. STORAGE BUCKET & RLS POLICIES (pdf_downloads)
+-- ────────────────────────────────────────────────────────────
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES ('pdf_downloads', 'pdf_downloads', true, 10485760, ARRAY['application/pdf'])
+ON CONFLICT (id) DO UPDATE
+SET public = true,
+    file_size_limit = 10485760,
+    allowed_mime_types = ARRAY['application/pdf'];
+
+DROP POLICY IF EXISTS "Allow Public Downloads" ON storage.objects;
+CREATE POLICY "Allow Public Downloads" ON storage.objects
+    FOR SELECT TO public
+    USING (bucket_id = 'pdf_downloads');
+
+DROP POLICY IF EXISTS "Allow Authenticated Uploads" ON storage.objects;
+CREATE POLICY "Allow Authenticated Uploads" ON storage.objects
+    FOR INSERT TO authenticated
+    WITH CHECK (bucket_id = 'pdf_downloads');
+
+DROP POLICY IF EXISTS "Allow Authenticated Updates" ON storage.objects;
+CREATE POLICY "Allow Authenticated Updates" ON storage.objects
+    FOR UPDATE TO authenticated
+    USING (bucket_id = 'pdf_downloads')
+    WITH CHECK (bucket_id = 'pdf_downloads');
+
+DROP POLICY IF EXISTS "Allow Authenticated Deletes" ON storage.objects;
+CREATE POLICY "Allow Authenticated Deletes" ON storage.objects
+    FOR DELETE TO authenticated
+    USING (bucket_id = 'pdf_downloads');
